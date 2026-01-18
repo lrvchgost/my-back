@@ -10,8 +10,11 @@ dependencyResolutionManagement {
 
 pluginManagement {
     plugins {
-//        val kotlinVersion: String by settings
-        kotlin("jvm")
+        includeBuild("../build-plugin")
+        plugins {
+            id("build-jvm") apply false
+            id("build-kmp") apply false
+        }
     }
     repositories {
         mavenCentral()

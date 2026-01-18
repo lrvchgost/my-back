@@ -1,12 +1,5 @@
-//plugins {
-//    id("build-jvm")
-//}
-
 plugins {
-    alias(libs.plugins.kotlin.jvm)
-}
-repositories {
-    mavenCentral()
+    id("build-jvm")
 }
 
 dependencies {

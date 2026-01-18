@@ -1,10 +1,13 @@
 /.gradle/
+**/.gradle/**
 **/build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/**/build/
 
 /.idea/
+.idea/**/*
 **/*.iml
 
 ### Kotlin ###
 /.kotlin/
+**/.kotlin/**

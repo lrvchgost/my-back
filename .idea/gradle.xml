@@ -3,12 +3,25 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/lessons" name="lessons">
+                <projects>
+                  <project path="$PROJECT_DIR$/lessons" />
+                  <project path="$PROJECT_DIR$/lessons/m1l1-first" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleHome" value="" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/m1l1-first" />
+            <option value="$PROJECT_DIR$/lessons" />
+            <option value="$PROJECT_DIR$/lessons/m1l1-first" />
           </set>
         </option>
       </GradleProjectSettings>

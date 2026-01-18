@@ -1,8 +1,7 @@
 
 pluginManagement {
-    val kotlinVersion: String by settings
-
     plugins {
+        val kotlinVersion: String by settings
         kotlin("jvm") version kotlinVersion
     }
 }
@@ -11,6 +10,6 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
 }
 
-rootProject.name = "my-back"
+rootProject.name = "lessons"
 
-includeBuild("lessons")
+include("m1l1-first")

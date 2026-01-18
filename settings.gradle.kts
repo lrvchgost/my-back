@@ -14,3 +14,4 @@ plugins {
 rootProject.name = "my-back"
 
 includeBuild("lessons")
+includeBuild("my-project-be")

@@ -12,6 +12,12 @@
                   <project path="$PROJECT_DIR$/lessons/m1l1-first" />
                 </projects>
               </build>
+              <build path="$PROJECT_DIR$/my-project-be" name="my-project-be">
+                <projects>
+                  <project path="$PROJECT_DIR$/my-project-be" />
+                  <project path="$PROJECT_DIR$/my-project-be/my-project-tmp" />
+                </projects>
+              </build>
             </builds>
           </compositeBuild>
         </compositeConfiguration>
@@ -22,6 +28,8 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/lessons" />
             <option value="$PROJECT_DIR$/lessons/m1l1-first" />
+            <option value="$PROJECT_DIR$/my-project-be" />
+            <option value="$PROJECT_DIR$/my-project-be/my-project-tmp" />
           </set>
         </option>
       </GradleProjectSettings>

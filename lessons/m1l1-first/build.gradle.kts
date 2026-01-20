@@ -1,12 +1,5 @@
 plugins {
-    kotlin("jvm") version "2.2.20"
-}
-
-group = "ru.otus.otuskotlin.lrvch"
-version = "1.0-SNAPSHOT"
-
-repositories {
-    mavenCentral()
+    kotlin("jvm")
 }
 
 dependencies {

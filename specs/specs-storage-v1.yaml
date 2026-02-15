@@ -1,0 +1,476 @@
+openapi: 3.0.3
+info:
+  title: "Catalog of storages ${VERSION_APP}"
+  description: A place where data stored
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/v1
+tags:
+  - name: storage
+    description: Хранилище данных
+paths:
+  /storage/create:
+    post:
+      tags:
+        - storage
+      summary: Create storage
+      operationId: storageCreate
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StorageCreateRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorageCreateResponse'
+  /storage/read:
+    post:
+      tags:
+        - storage
+      summary: Read storage
+      operationId: storageRead
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StorageReadRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorageReadResponse'
+  /storage/update:
+    post:
+      tags:
+        - storage
+      summary: Update storage
+      operationId: storageUpdate
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StorageUpdateRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorageUpdateResponse'
+  /storage/delete:
+    post:
+      tags:
+        - storage
+      summary: Delete storage
+      operationId: storageDelete
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StorageDeleteRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorageDeleteResponse'
+  /storage/search:
+    post:
+      tags:
+        - storage
+      summary: Search storage
+      operationId: storageSearch
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StorageSearchRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StorageSearchResponse'
+  /storage/optimize:
+    post:
+      tags:
+        - storage
+      summary: Optimize storages
+      operationId: optimizeStorages
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OptimizeStoragesRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OptimizeStoragesResponse'
+
+components:
+  schemas:
+
+    IRequest:
+      type: object
+      description: Базовый интерфейс для всех запросов
+      properties:
+        requestType:
+          type: string
+          description: Поле-дескриминатор для вычисления типа запроса
+          example: create
+        traceId:
+          $ref: '#/components/schemas/TraceId'
+      discriminator:
+        propertyName: requestType
+        mapping:
+          create: '#/components/schemas/StorageCreateRequest'
+          read:   '#/components/schemas/StorageReadRequest'
+          update: '#/components/schemas/StorageUpdateRequest'
+          delete: '#/components/schemas/StorageDeleteRequest'
+          search: '#/components/schemas/StorageSearchRequest'
+          optimize: '#/components/schemas/OptimizeStoragesRequest'
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        group:
+          type: string
+        field:
+          type: string
+        message:
+          type: string
+
+    ResponseResult:
+      type: string
+      enum:
+        - success
+        - error
+
+    IResponse:
+      type: object
+      description: Базовый интерфейс для всех ответов
+      properties:
+        responseType:
+          type: string
+          description: Поле-дескриминатор для вычисления типа запроса
+          example: create
+        result:
+          $ref: '#/components/schemas/ResponseResult'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+
+      discriminator:
+        propertyName: responseType
+        mapping:
+          create: '#/components/schemas/StorageCreateResponse'
+          read:   '#/components/schemas/StorageReadResponse'
+          update: '#/components/schemas/StorageUpdateResponse'
+          delete: '#/components/schemas/StorageDeleteResponse'
+          search: '#/components/schemas/StorageSearchResponse'
+          optimize: '#/components/schemas/OptimizeStoragesResponse'
+
+    StorageResponseObject:
+      allOf:
+        - $ref: '#/components/schemas/BaseStorage'
+        - type: object
+          description: Объект, который возвращается в ответе бэкенда
+          properties:
+            id:
+              $ref: '#/components/schemas/StorageId'
+            lock:
+              $ref: '#/components/schemas/StorageLock'
+            permissions:
+              type: array
+              uniqueItems: true
+              items:
+                $ref: '#/components/schemas/StoragePermissions'
+
+    BaseStorage:
+      type: object
+      description: Объект описывает свойства, одинаковые для create и update
+      properties:
+        title:
+          type: string
+          description: Заголовок хранилища
+        description:
+          type: string
+          description: Описание хранилища
+        paymentType:
+          $ref: '#/components/schemas/PaymentType'
+        readSpeed:
+          $ref: '#/components/schemas/SpeedType'
+        writeSpeed:
+          $ref: '#/components/schemas/SpeedType'
+
+    StorageCreateObject:
+      allOf:
+        - $ref: '#/components/schemas/BaseStorage'
+
+    StorageCreateRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/StorageRequestDebug'
+        - type: object
+          properties:
+            storage:
+              $ref: '#/components/schemas/StorageCreateObject'
+
+    StorageCreateResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/StorageResponseSingle'
+
+    StorageResponseSingle:
+      allOf:
+        - type: object
+          description: Ответ с одним объектом хранилища
+          properties:
+            storage:
+              $ref: '#/components/schemas/StorageResponseObject'
+
+    StorageReadObject:
+      allOf:
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/StorageId'
+
+    StorageReadRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/StorageRequestDebug'
+        - type: object
+          properties:
+            storage:
+              $ref: '#/components/schemas/StorageReadObject'
+
+    StorageReadResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/StorageResponseSingle'
+
+    StorageUpdateObject:
+      allOf:
+        - $ref: '#/components/schemas/BaseStorage'
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/StorageId'
+            lock:
+              $ref: '#/components/schemas/StorageLock'
+
+    StorageUpdateRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/StorageRequestDebug'
+        - type: object
+          properties:
+            storage:
+              $ref: '#/components/schemas/StorageUpdateObject'
+
+    StorageUpdateResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/StorageResponseSingle'
+
+    StorageDeleteObject:
+      allOf:
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/StorageId'
+            lock:
+              $ref: '#/components/schemas/StorageLock'
+
+    StorageDeleteRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/StorageRequestDebug'
+        - type: object
+          properties:
+            storage:
+              $ref: '#/components/schemas/StorageDeleteObject'
+
+    StorageDeleteResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/StorageResponseSingle'
+
+    StorageSearchFilter:
+      type: object
+      description: Набор фильтров для поиска
+      properties:
+        searchString:
+          type: string
+          description: Поисковая строка, которая будет искаться в описаниях хранилищь
+        availability:
+          $ref: '#/components/schemas/Availability'
+        capacity:
+          $ref: '#/components/schemas/Capacity'
+        paymentType:
+          $ref: '#/components/schemas/PaymentType'
+        readSpeed:
+          $ref: '#/components/schemas/SpeedType'
+        writeSpeed:
+          $ref: '#/components/schemas/SpeedType'
+
+    StorageSearchRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/StorageRequestDebug'
+        - type: object
+          properties:
+            adFilter:
+              $ref: '#/components/schemas/StorageSearchFilter'
+
+    StorageSearchResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/StorageResponseMulti'
+
+    StorageResponseMulti:
+      allOf:
+        - type: object
+          description: Список найденных объектов
+          properties:
+            storages:
+              type: array
+              items:
+                $ref: '#/components/schemas/StorageResponseObject'
+
+    StorageOptimizeObject:
+      allOf:
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/StorageId'
+
+    OptimizeStoragesRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/StorageRequestDebug'
+        - type: object
+          description: Список id для оптимизации
+          properties:
+            storages:
+              type: array
+              items:
+                $ref: '#/components/schemas/StorageOptimizeObject'
+
+    OptimizeStoragesResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/StorageRequestDebug'
+        - $ref: '#/components/schemas/StorageResponseSingle'
+
+    PaymentType:
+      type: string
+      description: 'Варианты оплаты'
+      enum:
+        - free
+        - prepaid
+        - license
+
+    SpeedType:
+      type: string
+      description: 'Варианты скорости считывания и записи'
+      enum:
+        - 100
+        - 150
+        - 200
+
+    Capacity:
+      type: string
+      description: 'Объем хранилища'
+
+    Availability:
+      type: string
+      description: 'Доступность хранилища'
+
+    StoragePermissions:
+      type: string
+      description: Доступы для клиента для операций над хранилищем
+      enum:
+        - read
+        - update
+        - delete
+
+    StorageId:
+      type: string
+      description: Идентификатор хранилища
+
+    StorageLock:
+      type: string
+      description: Версия оптимистичной блокировки
+
+    TraceId:
+      type: string
+      description: Уникальный идентификатор запроса
+
+
+    # STUBS ======================
+
+    StorageRequestDebugMode:
+      type: string
+      enum:
+        - prod
+        - test
+        - stub
+
+    StorageRequestDebug:
+      type: object
+      properties:
+        debug:
+          $ref: '#/components/schemas/StorageDebug'
+
+    StorageDebug:
+      type: object
+      properties:
+        mode:
+          $ref: '#/components/schemas/StorageRequestDebugMode'
+        stub:
+          $ref: '#/components/schemas/StorageRequestDebugStubs'
+
+    StorageRequestDebugStubs:
+      type: string
+      description: Перечисления всех стабов
+      enum:
+        - success
+        - notFound
+        - badId
+        - badTitle
+        - badDescription
+        - badPaymentMethod
+        - badSpeedType
+        - cannotDelete
+        - badSearchString

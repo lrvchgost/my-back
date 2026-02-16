@@ -29,7 +29,7 @@ class ResponseV1SerializationTest {
     @Test
     fun deserialize() {
         val json = apiV1Mapper.writeValueAsString(response)
-        val obj = apiV1Mapper.readValue(json, IResponse::class.java) as StorageCreateResponse
+        val obj = apiV1Mapper.readValue(json, StorageCreateResponse::class.java)
 
         assertEquals(response, obj)
     }

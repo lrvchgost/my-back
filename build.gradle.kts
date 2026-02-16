@@ -25,11 +25,11 @@ tasks {
             dependsOn(it.task(":clean"))
         }
     }
-//    register("buildInfra") { ->
-//        dependsOn(
-//            gradle.includedBuild("ok-marketplace-other").task(":buildInfra")
-//        )
-//    }
+    register("buildInfra") { ->
+        dependsOn(
+            gradle.includedBuild("deploy-project").task(":buildInfra")
+        )
+    }
 
 //    register("buildImages") {
 //        dependsOn(gradle.includedBuild("ok-marketplace-be").task(":buildImages"))
@@ -40,9 +40,8 @@ tasks {
 //        )
 //    }
 
-//    register("check") {
-//        group = "verification"
-//        dependsOn(gradle.includedBuild("ok-marketplace-be").task(":check"))
-//    }
+    register("check") {
+        group = "verification"
+        dependsOn(gradle.includedBuild("my-project-be").task(":check"))
+    }
 }
-

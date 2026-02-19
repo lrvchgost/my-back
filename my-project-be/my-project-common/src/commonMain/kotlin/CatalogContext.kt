@@ -1,14 +1,14 @@
 package ru.otus.otuskotlin.lrvch.common
 
 import kotlinx.datetime.Instant
-import models.CatalogCommand
-import models.CatalogError
-import models.CatalogRequestId
-import models.CatalogState
-import models.CatalogWorkMode
-import models.Storage
-import models.StorageFilter
-import stubs.CatalogStubs
+import ru.otus.otuskotlin.lrvch.common.models.CatalogCommand
+import ru.otus.otuskotlin.lrvch.common.models.CatalogError
+import ru.otus.otuskotlin.lrvch.common.models.CatalogRequestId
+import ru.otus.otuskotlin.lrvch.common.models.CatalogState
+import ru.otus.otuskotlin.lrvch.common.models.CatalogWorkMode
+import ru.otus.otuskotlin.lrvch.common.models.Storage
+import ru.otus.otuskotlin.lrvch.common.models.StorageFilter
+import ru.otus.otuskotlin.lrvch.common.stubs.CatalogStubs
 
 data class CatalogContext(
     var command: CatalogCommand = CatalogCommand.NONE,
@@ -21,6 +21,7 @@ data class CatalogContext(
     var requestId: CatalogRequestId = CatalogRequestId.NONE,
     var timeStart: Instant = Instant.NONE,
     var storageRequest: Storage = Storage(),
+    var storagesRequest: List<Storage> = listOf(),
     var storageFilterRequest: StorageFilter = StorageFilter(),
     var storageResponse: Storage = Storage(),
     var storagesResponse: MutableList<Storage> = mutableListOf(),

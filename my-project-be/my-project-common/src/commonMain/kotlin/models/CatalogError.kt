@@ -1,4 +1,4 @@
-package models
+package ru.otus.otuskotlin.lrvch.common.models
 
 data class CatalogError(
     val code: String = "",

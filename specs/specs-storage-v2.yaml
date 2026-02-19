@@ -433,6 +433,7 @@ components:
       type: string
       description: Доступы для клиента для операций над хранилищем
       enum:
+        - create
         - read
         - update
         - delete

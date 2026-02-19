@@ -1,4 +1,4 @@
-package stubs
+package ru.otus.otuskotlin.lrvch.common.stubs
 
 enum class CatalogStubs {
     NONE,
@@ -7,8 +7,8 @@ enum class CatalogStubs {
     BAD_ID,
     BAD_TITLE,
     BAD_DESCRIPTION,
-    BAD_TARIFF,
-    BAD_CAPACITY,
     BAD_SEARCH,
-    BAD_OPTIMIZE,
+    CANNOT_DELETE,
+    BAD_PAYMENT_METHOD,
+    BAD_SPEED_TYPE
 }

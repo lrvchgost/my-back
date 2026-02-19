@@ -1,4 +1,4 @@
-package models
+package ru.otus.otuskotlin.lrvch.common.models
 
 enum class SpeedType(val value: String) {
     NONE("NONE"),

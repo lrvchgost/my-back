@@ -352,7 +352,7 @@ components:
         - $ref: '#/components/schemas/StorageRequestDebug'
         - type: object
           properties:
-            adFilter:
+            searchFilter:
               $ref: '#/components/schemas/StorageSearchFilter'
 
     StorageSearchResponse:

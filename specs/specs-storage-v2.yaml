@@ -225,6 +225,12 @@ components:
         description:
           type: string
           description: Описание хранилища
+        capacity:
+          type: string
+          description: Емкость хранилища
+        availability:
+          type: string
+          description: Доступность хранилища
         paymentType:
           $ref: '#/components/schemas/PaymentType'
         readSpeed:

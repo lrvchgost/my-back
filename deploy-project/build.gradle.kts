@@ -16,3 +16,10 @@ subprojects {
     group = rootProject.group
     version = rootProject.version
 }
+
+tasks {
+    register("buildInfra") {
+        group = "build"
+        dependsOn(project(":deploy-project-dcompose").getTasksByName("publish",false))
+    }
+}

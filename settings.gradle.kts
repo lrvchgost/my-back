@@ -15,3 +15,4 @@ rootProject.name = "my-back"
 
 includeBuild("lessons")
 includeBuild("my-project-be")
+includeBuild("deploy-project")

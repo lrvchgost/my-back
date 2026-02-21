@@ -13,7 +13,7 @@ import ru.otus.otuskotlin.lrvch.common.stubs.CatalogStubs
 data class CatalogContext(
     var command: CatalogCommand = CatalogCommand.NONE,
     var state: CatalogState = CatalogState.NONE,
-    val errors: MutableList<CatalogError> = mutableListOf(),
+    var errors: MutableList<CatalogError> = mutableListOf(),
 
     var workMode: CatalogWorkMode = CatalogWorkMode.PROD,
     var stubCase: CatalogStubs = CatalogStubs.NONE,

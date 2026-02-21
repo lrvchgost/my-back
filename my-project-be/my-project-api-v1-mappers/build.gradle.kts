@@ -11,5 +11,5 @@ dependencies {
     implementation(projects.myProjectCommon)
 
     testImplementation(kotlin("test-junit"))
-//    testImplementation(projects.myProjectStubs)
+    testImplementation(projects.myProjectStubs)
 }

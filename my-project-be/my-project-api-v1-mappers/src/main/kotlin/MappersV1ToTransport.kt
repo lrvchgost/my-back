@@ -71,7 +71,7 @@ fun CatalogContext.toTransportOptimize() = OptimizeStoragesResponse(
     storage = storageResponse.toTransport()
 )
 
-private fun Storage.toTransport(): StorageResponseObject = StorageResponseObject(
+fun Storage.toTransport(): StorageResponseObject = StorageResponseObject(
     id = id.toTransport(),
     title = title.takeIf { it.isNotBlank() },
     description = description.takeIf { it.isNotBlank() },
@@ -125,10 +125,10 @@ private fun Set<StoragePermissionClient>.toTransport(): Set<StoragePermissions>?
     .toSet()
     .takeIf { isNotEmpty() }
 
-private fun List<Storage>.toTransport(): List<StorageResponseObject>? = this
+fun List<Storage>.toTransport(): List<StorageResponseObject>? = this
     .map { it.toTransport() }
     .takeIf { it.isNotEmpty() }
 
-private fun List<CatalogError>.toTransportError(): List<Error>? = this
+fun List<CatalogError>.toTransportError(): List<Error>? = this
     .map { it.toTransport() }
     .takeIf { it.isNotEmpty() }

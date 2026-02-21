@@ -115,14 +115,14 @@ private fun StorageDeleteObject?.fromTransport(): Storage = Storage(
     lock = this?.lock.toStorageLock()
 )
 
-private fun SpeedType?.fromTransport(): SpeedTypeModel = when (this) {
+internal fun SpeedType?.fromTransport(): SpeedTypeModel = when (this) {
     SpeedType._100 -> SpeedTypeModel._100
     SpeedType._150 -> SpeedTypeModel._150
     SpeedType._200 -> SpeedTypeModel._200
     null -> SpeedTypeModel.NONE
 }
 
-private fun PaymentType?.fromTransport(): CatalogPaymentType = when (this) {
+internal fun PaymentType?.fromTransport(): CatalogPaymentType = when (this) {
     PaymentType.FREE -> CatalogPaymentType.FREE
     PaymentType.PREPAID -> CatalogPaymentType.PREPAID
     PaymentType.LICENSE -> CatalogPaymentType.LICENSE

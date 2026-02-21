@@ -17,7 +17,7 @@ kotlin {
             kotlin.srcDirs(layout.buildDirectory.dir("generate-resources/src/commonMain/kotlin"))
             dependencies {
                 implementation(kotlin("stdlib-common"))
-//                implementation(projects.okMarketplaceCommon)
+                implementation(projects.myProjectCommon)
 
                 implementation(libs.kotlinx.serialization.core)
                 implementation(libs.kotlinx.serialization.json)
@@ -27,7 +27,7 @@ kotlin {
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
-//                implementation(projects.okMarketplaceStubs)
+                implementation(projects.myProjectStubs)
             }
         }
         jvmTest {

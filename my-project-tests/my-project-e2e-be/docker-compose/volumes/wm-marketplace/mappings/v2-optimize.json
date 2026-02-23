@@ -1,34 +1,35 @@
 {
   "request": {
     "method": "POST",
-    "url": "/v2/ad/offers"
+    "url": "/v1/storage/optimize"
   },
   "response": {
     "status": 200,
     "jsonBody": {
-      "responseType": "offers",
+      "responseType": "optimize",
       "result": "success",
-      "ad": {
-        "id": "123",
-        "title": "Требуется болт",
-        "description": "Требуется болт 100x5 с шестигранной шляпкой",
-        "adType": "supply",
-        "visibility": "public"
-      },
-      "ads": [
+      "storages": [
         {
           "id": "123",
-          "title": "Selling Bolt",
-          "description": "Требуется болт 100x5 с шестигранной шляпкой",
-          "adType": "demand",
-          "visibility": "public"
+          "title": "Storage 1",
+          "description": "Хранилище для клиентов с не активной почтой",
+          "capacity": "100",
+          "availability": "99.99",
+          "paymentType": "free",
+          "readSpeed": "100",
+          "writeSpeed": "100",
+          "enableOptimize": "0"
         },
         {
-          "id": "124",
-          "title": "Selling Nut",
-          "description": "Требуется болт 100x5 с шестигранной шляпкой",
-          "adType": "demand",
-          "visibility": "public"
+          "id": "234",
+          "title": "Storage 2",
+          "description": "Хранилище для клиентов с активной почтой",
+          "capacity": "100",
+          "availability": "99.99",
+          "paymentType": "free",
+          "readSpeed": "100",
+          "writeSpeed": "100",
+          "enableOptimize": "0"
         }
       ]
     },

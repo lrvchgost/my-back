@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "POST",
-    "url": "/v2/ad/update"
+    "url": "/v2/storageupdate"
   },
 
   "response": {
@@ -9,12 +9,18 @@
     "jsonBody": {
       "responseType": "update",
       "result": "success",
-      "ad": {
+      "storage": {
         "id": "123",
-        "title": "Selling Nut",
-        "description": "Требуется болт 100x5 с шестигранной шляпкой",
-        "adType": "demand",
-        "visibility": "public"
+        "title": "{{{jsonPath request.body '$.storage.title'}}}",
+        "description": "Хранилище для клиентов с не активной почтой",
+        "capacity": "100",
+        "availability": "99.99",
+        "paymentType": "{{{jsonPath request.body '$.storage.paymentType'}}}",
+        "readSpeed": "{{{jsonPath request.body '$.storage.readSpeed'}}}",
+        "writeSpeed": "{{{jsonPath request.body '$.storage.writeSpeed'}}}",
+        "lock": "123",
+        "permissions": ["create"],
+        "enableOptimize": "0"
       }
     },
     "headers": {

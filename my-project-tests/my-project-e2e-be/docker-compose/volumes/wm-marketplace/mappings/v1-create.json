@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "POST",
-    "url": "/v1/ad/create"
+    "url": "/v1/storage/create"
   },
 
   "response": {
@@ -9,12 +9,17 @@
     "jsonBody": {
       "responseType": "create",
       "result": "success",
-      "ad": {
+      "storage": {
         "id": "123",
-        "title": "{{{jsonPath request.body '$.ad.title'}}}",
-        "description": "Требуется болт 100x5 с шестигранной шляпкой",
-        "adType": "{{{jsonPath request.body '$.ad.adType'}}}",
-        "visibility": "public"
+        "title": "{{{jsonPath request.body '$.storage.title'}}}",
+        "description": "Хранилище для клиентов с не активной почтой",
+        "capacity": "100",
+        "availability": "99.99",
+        "paymentType": "{{{jsonPath request.body '$.storage.paymentType'}}}",
+        "readSpeed": "{{{jsonPath request.body '$.storage.readSpeed'}}}",
+        "writeSpeed": "{{{jsonPath request.body '$.storage.writeSpeed'}}}",
+        "lock": "123",
+        "permissions": ["create"]
       }
     },
     "headers": {

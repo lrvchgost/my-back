@@ -30,8 +30,8 @@ abstract class AbstractDockerCompose(
     private val LOGGER = org.slf4j.LoggerFactory.getLogger(ComposeContainer::class.java)
     private val logConsumer = Slf4jLogConsumer(LOGGER)
     private fun getComposeFiles(): List<File> = dockerComposeNames.map {
-//        val file = File("build/dcompose/$it")
-        val file = File("docker-compose/$it")
+        val file = File("build/dcompose/$it")
+//        val file = File("docker-compose/$it")
         if (!file.exists()) throw IllegalArgumentException("file $it not found!")
         file
     }

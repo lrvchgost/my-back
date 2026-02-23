@@ -34,11 +34,11 @@ tasks {
 //    register("buildImages") {
 //        dependsOn(gradle.includedBuild("ok-marketplace-be").task(":buildImages"))
 //    }
-//    register("e2eTests") { ->
-//        dependsOn(
-//            gradle.includedBuild("ok-marketplace-tests").task(":e2eTests")
-//        )
-//    }
+    register("e2eTests") { ->
+        dependsOn(
+            gradle.includedBuild("my-project-tests").task(":e2eTests")
+        )
+    }
 
     register("check") {
         group = "verification"

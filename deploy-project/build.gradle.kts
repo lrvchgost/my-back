@@ -3,8 +3,8 @@ plugins {
     id("maven-publish")
 }
 
-group = "ru.otus.otuskotlin.lrvch.tests"
-version = "0.1.0"
+group = "ru.otus.otuskotlin.lrvch"
+version = "1.0"
 
 allprojects {
     repositories {

@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "POST",
-    "url": "/v2/storageupdate"
+    "url": "/v2/storage/update"
   },
 
   "response": {
@@ -10,17 +10,17 @@
       "responseType": "update",
       "result": "success",
       "storage": {
-        "id": "123",
+        "id": "{{{jsonPath request.body '$.ad.id'}}}",
         "title": "{{{jsonPath request.body '$.storage.title'}}}",
-        "description": "Хранилище для клиентов с не активной почтой",
-        "capacity": "100",
-        "availability": "99.99",
+        "description": "{{{jsonPath request.body '$.storage.description'}}}",
+        "capacity": "{{{jsonPath request.body '$.storage.capacity'}}}",
+        "availability": "{{{jsonPath request.body '$.storage.availability'}}}",
         "paymentType": "{{{jsonPath request.body '$.storage.paymentType'}}}",
         "readSpeed": "{{{jsonPath request.body '$.storage.readSpeed'}}}",
         "writeSpeed": "{{{jsonPath request.body '$.storage.writeSpeed'}}}",
-        "lock": "123",
+        "lock": "{{{jsonPath request.body '$.storage.lock'}}}",
         "permissions": ["create"],
-        "enableOptimize": "0"
+        "enableOptimize": "{{{jsonPath request.body '$.storage.enableOptimize'}}}"
       }
     },
     "headers": {

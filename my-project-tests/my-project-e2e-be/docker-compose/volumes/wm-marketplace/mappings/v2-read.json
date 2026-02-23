@@ -11,13 +11,13 @@
       "result": "success",
       "storage": {
         "id": "123",
-        "title": "{{{jsonPath request.body '$.storage.title'}}}",
-        "description": "Хранилище для клиентов с не активной почтой",
+        "title": "Some storage",
+        "description": "Хранилище для пользователей без почты",
         "capacity": "100",
         "availability": "99.99",
-        "paymentType": "{{{jsonPath request.body '$.storage.paymentType'}}}",
-        "readSpeed": "{{{jsonPath request.body '$.storage.readSpeed'}}}",
-        "writeSpeed": "{{{jsonPath request.body '$.storage.writeSpeed'}}}",
+        "paymentType": "free",
+        "readSpeed": "100",
+        "writeSpeed": "100",
         "lock": "123",
         "permissions": ["create"],
         "enableOptimize": "0"

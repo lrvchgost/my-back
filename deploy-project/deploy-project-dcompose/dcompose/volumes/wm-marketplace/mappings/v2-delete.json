@@ -1,19 +1,25 @@
 {
   "request": {
     "method": "POST",
-    "url": "/v2/ad/delete"
+    "url": "/v2/storage/delete"
   },
   "response": {
     "status": 200,
     "jsonBody": {
       "responseType": "delete",
       "result": "success",
-      "ad": {
+      "storage": {
         "id": "{{{jsonPath request.body '$.ad.id'}}}",
-        "title": "Требуется болт",
-        "description": "Требуется болт 100x5 с шестигранной шляпкой",
-        "adType": "demand",
-        "visibility": "public"
+        "title": "Some storage",
+        "description": "Хранилище для пользователей без почты",
+        "capacity": "100",
+        "availability": "99.99",
+        "paymentType": "free",
+        "readSpeed": "100",
+        "writeSpeed": "100",
+        "lock": "123",
+        "permissions": ["create"],
+        "enableOptimize": "0"
       }
     },
     "headers": {

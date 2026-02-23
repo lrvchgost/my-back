@@ -12,15 +12,15 @@
       "storage": {
         "id": "123",
         "title": "{{{jsonPath request.body '$.storage.title'}}}",
-        "description": "Хранилище для клиентов с не активной почтой",
-        "capacity": "100",
-        "availability": "99.99",
+        "description": "{{{jsonPath request.body '$.storage.description'}}}",
+        "capacity": "{{{jsonPath request.body '$.storage.capacity'}}}",
+        "availability": "{{{jsonPath request.body '$.storage.availability'}}}",
         "paymentType": "{{{jsonPath request.body '$.storage.paymentType'}}}",
         "readSpeed": "{{{jsonPath request.body '$.storage.readSpeed'}}}",
         "writeSpeed": "{{{jsonPath request.body '$.storage.writeSpeed'}}}",
         "lock": "123",
         "permissions": ["create"],
-        "enableOptimize": "0"
+        "enableOptimize": "{{{jsonPath request.body '$.storage.enableOptimize'}}}"
       }
     },
     "headers": {

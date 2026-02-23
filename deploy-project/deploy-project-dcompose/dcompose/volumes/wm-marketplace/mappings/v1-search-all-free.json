@@ -3,7 +3,7 @@
     "method": "POST",
     "url": "/v1/storage/search",
     "bodyPatterns": [
-      {"matchesJsonPath" : "$.searchFilter[?(@.searchString == 'public')]"}
+      {"matchesJsonPath" : "$.searchFilter[?(@.paymentType == 'free')]"}
     ]
   },
   "response": {
@@ -14,7 +14,7 @@
       "storages": [
         {
           "id": "123",
-          "title": "public",
+          "title": "Storage 1",
           "description": "Хранилище для клиентов с не активной почтой",
           "capacity": "100",
           "availability": "99.99",
@@ -26,8 +26,8 @@
         },
         {
           "id": "234",
-          "title": "public",
-          "description": "Хранилище для приватных клиентов с не активной почтой",
+          "title": "Storage 2",
+          "description": "Хранилище для клиентов с активной почтой",
           "capacity": "100",
           "availability": "99.99",
           "paymentType": "free",

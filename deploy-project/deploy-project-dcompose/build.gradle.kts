@@ -32,7 +32,7 @@ publishing {
     }
     publications {
         create<MavenPublication>("maven") {
-            groupId = "ru.otus.otuskotlin.lrvch.cataloofstorages"
+            groupId = "ru.otus.otuskotlin.lrvch"
             artifactId = "dcompose"
             version = "1.0"
 

@@ -13,5 +13,7 @@ plugins {
 
 rootProject.name = "my-back"
 
-includeBuild("lessons")
+//includeBuild("lessons")
 includeBuild("my-project-be")
+includeBuild("deploy-project")
+includeBuild("my-project-tests")

@@ -1,0 +1,47 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/v2/storage/search",
+    "bodyPatterns": [
+      {"matchesJsonPath" : "$.searchFilter[?(@.paymentType == 'free')]"}
+    ]
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "responseType": "search",
+      "result": "success",
+      "storages": [
+        {
+          "id": "123",
+          "title": "Storage 1",
+          "description": "Хранилище для клиентов с не активной почтой",
+          "capacity": "100",
+          "availability": "99.99",
+          "paymentType": "free",
+          "readSpeed": "100",
+          "writeSpeed": "100",
+          "lock": "123",
+          "permissions": ["create"],
+          "enableOptimize": "0"
+        },
+        {
+          "id": "234",
+          "title": "Storage 2",
+          "description": "Хранилище для клиентов с активной почтой",
+          "capacity": "100",
+          "availability": "99.99",
+          "paymentType": "free",
+          "readSpeed": "100",
+          "writeSpeed": "100",
+          "lock": "234",
+          "permissions": ["create"],
+          "enableOptimize": "0"
+        }
+      ]
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

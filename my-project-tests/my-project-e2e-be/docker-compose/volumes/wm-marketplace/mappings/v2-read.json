@@ -1,0 +1,31 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/v2/storage/read"
+  },
+
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "responseType": "read",
+      "result": "success",
+      "storage": {
+        "id": "123",
+        "title": "Some storage",
+        "description": "Хранилище для пользователей без почты",
+        "capacity": "100",
+        "availability": "99.99",
+        "paymentType": "free",
+        "readSpeed": "100",
+        "writeSpeed": "100",
+        "lock": "123",
+        "permissions": ["create"],
+        "enableOptimize": "0"
+      }
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "transformers": ["response-template"]
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/v2/storage/update"
+  },
+
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "responseType": "update",
+      "result": "success",
+      "storage": {
+        "id": "{{{jsonPath request.body '$.ad.id'}}}",
+        "title": "{{{jsonPath request.body '$.storage.title'}}}",
+        "description": "{{{jsonPath request.body '$.storage.description'}}}",
+        "capacity": "{{{jsonPath request.body '$.storage.capacity'}}}",
+        "availability": "{{{jsonPath request.body '$.storage.availability'}}}",
+        "paymentType": "{{{jsonPath request.body '$.storage.paymentType'}}}",
+        "readSpeed": "{{{jsonPath request.body '$.storage.readSpeed'}}}",
+        "writeSpeed": "{{{jsonPath request.body '$.storage.writeSpeed'}}}",
+        "lock": "{{{jsonPath request.body '$.storage.lock'}}}",
+        "permissions": ["create"],
+        "enableOptimize": "{{{jsonPath request.body '$.storage.enableOptimize'}}}"
+      }
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "transformers": ["response-template"]
+  }
+}

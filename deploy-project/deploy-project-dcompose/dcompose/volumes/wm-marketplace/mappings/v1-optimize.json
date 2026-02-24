@@ -1,0 +1,26 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/v1/storage/optimize"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "responseType": "optimize",
+      "result": "success",
+      "storage": {
+        "id": "123",
+        "title": "Change it",
+        "description": "Change it",
+        "capacity": "300",
+        "availability": "99.99",
+        "paymentType": "free",
+        "readSpeed": "100",
+        "writeSpeed": "100"
+      }
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

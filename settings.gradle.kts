@@ -17,3 +17,4 @@ rootProject.name = "my-back"
 includeBuild("my-project-be")
 includeBuild("deploy-project")
 includeBuild("my-project-tests")
+includeBuild("my-project-libs")

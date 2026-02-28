@@ -1,10 +1,10 @@
-group = "ru.otus.otuskotlin.lrvch"
-version = "0.0.1"
-
 plugins {
     alias(libs.plugins.kotlin.jvm) apply false
     alias(libs.plugins.kotlin.multiplatform) apply false
 }
+
+group = "ru.otus.otuskotlin.lrvch.libs"
+version = "0.0.1"
 
 allprojects {
     repositories {
@@ -21,20 +21,13 @@ ext {
     val specDir = layout.projectDirectory.dir("../specs")
     set("spec-v1", specDir.file("specs-storage-v1.yaml").toString())
     set("spec-v2", specDir.file("specs-storage-v2.yaml").toString())
-    set("spec-logv1", specDir.file("specs-storage-logv1.yaml").toString())
 }
 
 tasks {
-    register("build" ) {
-        group = "build"
-    }
-    register("check" ) {
-        group = "verification"
-        subprojects.forEach { proj ->
-            println("PROJ $proj")
-            proj.getTasksByName("check", false).also {
-                this@register.dependsOn(it)
-            }
+    arrayOf("build", "clean", "check").forEach {tsk ->
+        register(tsk ) {
+            group = "build"
+            dependsOn(subprojects.map {  it.getTasksByName(tsk,false)})
         }
     }
 }

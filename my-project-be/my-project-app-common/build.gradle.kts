@@ -1,6 +1,5 @@
 plugins {
     id("build-kmp")
-    alias(libs.plugins.kotlinx.serialization)
 }
 
 kotlin {
@@ -9,17 +8,23 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(kotlin("stdlib-jdk8"))
-                api("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
-//                implementation(libs.kotlinx.serialization.core)
-//                implementation(libs.kotlinx.serialization.json)
-//                api("ru.otus.otuskotlin.lrvch.libs:my-project-lib-logging-common")
-                api(libs.cofs.logs.common)
+                implementation(libs.coroutines.core)
+
+                // transport models
+                implementation(project(":my-project-common"))
+                implementation(project(":my-project-api-logv1"))
+                implementation(project(":my-project-api-v2-kmp"))
+
+                implementation(project(":my-project-biz"))
             }
         }
         commonTest {
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
+
+                implementation(libs.coroutines.core)
+                implementation(libs.coroutines.test)
             }
         }
 

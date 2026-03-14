@@ -1,5 +1,6 @@
 [versions]
 kotlin = "2.2.21"
+cofs = "0.0.1"
 
 # BASE
 jvm-compiler = "21"
@@ -20,6 +21,10 @@ kermit = "2.0.3"
 
 #Frameworks
 ktor = "2.3.9"
+spring-boot = "3.4.0"
+
+# Docker
+muschko = "9.4.0"
 
 #Testing
 testcontainers = "1.21.4"
@@ -58,6 +63,18 @@ kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest"
 
 testcontainers-core = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers" }
 
+# Spring
+spring-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
+spring-webflux = { module = "org.springframework.boot:spring-boot-starter-webflux" }
+spring-webflux-ui = { module = "org.springdoc:springdoc-openapi-starter-webflux-ui", version = "2.3.0" }
+spring-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+
+# Message Queues
+kafka-client = { module = "org.apache.kafka:kafka-clients", version = "3.7.0" }
+
+cofs-logs-common = { module = "ru.otus.otuskotlin.lrvch.libs:my-project-lib-logging-common", version.ref = "cofs" }
+cofs-logs-kermit = { module = "ru.otus.otuskotlin.lrvch.libs:my-project-lib-logging-kermit", version.ref = "cofs" }
+
 [bundles]
 kotest = ["kotest-junit5", "kotest-core", "kotest-property"]
 
@@ -67,3 +84,4 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 openapi-generator = { id = "org.openapi.generator", version.ref = "openapi-generator" }
 crowdproj-generator = { id = "com.crowdproj.generator", version = "0.4.0" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+shadowJar = { id = "com.gradleup.shadow", version = "9.3.2" }

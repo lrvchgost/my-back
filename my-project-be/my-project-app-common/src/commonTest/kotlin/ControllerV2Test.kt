@@ -1,6 +1,5 @@
 package ru.otus.otuskotlin.lrvch.app.common
 
-import controllerHelper
 import kotlinx.coroutines.test.runTest
 import ru.otus.otuskotlin.lrvch.api.v2.mappers.fromTransport
 import ru.otus.otuskotlin.lrvch.api.v2.mappers.toTransportStorage
@@ -14,6 +13,7 @@ import ru.otus.otuskotlin.lrvch.api.v2.models.StorageDebug
 import ru.otus.otuskotlin.lrvch.api.v2.models.StorageRequestDebugMode
 import ru.otus.otuskotlin.lrvch.api.v2.models.StorageRequestDebugStubs
 import ru.otus.otuskotlin.lrvch.biz.CatalogProcessor
+import ru.otus.otuskotlin.lrvch.biz.ICatalogProcessor
 import ru.otus.otuskotlin.lrvch.common.CatalogCoreSettings
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -30,7 +30,7 @@ class ControllerV2Test {
 
     private val appSettings: ICatalogAppSettings = object : ICatalogAppSettings {
         override val corSettings: CatalogCoreSettings = CatalogCoreSettings()
-        override val processor: CatalogProcessor = CatalogProcessor(corSettings)
+        override val processor: ICatalogProcessor = CatalogProcessor(corSettings)
     }
 
     private suspend fun createCatalogSpring(request: StorageCreateRequest): StorageCreateResponse =

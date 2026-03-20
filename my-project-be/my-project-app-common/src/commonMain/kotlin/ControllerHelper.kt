@@ -1,6 +1,7 @@
+package ru.otus.otuskotlin.lrvch.app.common
+
 import kotlinx.datetime.Clock
 import ru.otus.otuskotlin.lrvch.api.logv1.mappers.toLog
-import ru.otus.otuskotlin.lrvch.app.common.ICatalogAppSettings
 import ru.otus.otuskotlin.lrvch.common.CatalogContext
 import ru.otus.otuskotlin.lrvch.common.helpers.asCatalogError
 import ru.otus.otuskotlin.lrvch.common.models.CatalogCommand

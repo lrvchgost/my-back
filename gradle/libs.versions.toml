@@ -39,10 +39,13 @@ kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+coroutines-reactor = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactor", version.ref = "coroutines" }
+coroutines-reactive = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactive", version.ref = "coroutines" }
 
 
-jackson-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
+    jackson-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
 jackson-datatype = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "jackson" }
+jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
 
 # Logging
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
@@ -60,6 +63,7 @@ ktor-network = { module = "io.ktor:ktor-network", version.ref = "ktor" }
 kotest-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 kotest-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
 kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
+mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version = "5.2.1" }
 
 testcontainers-core = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers" }
 
@@ -74,6 +78,11 @@ kafka-client = { module = "org.apache.kafka:kafka-clients", version = "3.7.0" }
 
 cofs-logs-common = { module = "ru.otus.otuskotlin.lrvch.libs:my-project-lib-logging-common", version.ref = "cofs" }
 cofs-logs-kermit = { module = "ru.otus.otuskotlin.lrvch.libs:my-project-lib-logging-kermit", version.ref = "cofs" }
+cofs-logs-logback = { module = "ru.otus.otuskotlin.lrvch.libs:my-project-lib-logging-logback", version.ref = "cofs" }
+#cofs-core = { module = "ru.otus.otuskotlin.lrvch.libs:my-project-lib-core", version.ref = "cofs" }
+#cofs-state-common = { module = "ru.otus.otuskotlin.lrvch.state:ok-marketplace-states-common", version.ref = "cofs" }
+#cofs-state-biz = { module = "ru.otus.otuskotlin.marketplace.state:ok-marketplace-states-biz", version.ref = "cofs" }
+
 
 [bundles]
 kotest = ["kotest-junit5", "kotest-core", "kotest-property"]
@@ -85,3 +94,12 @@ openapi-generator = { id = "org.openapi.generator", version.ref = "openapi-gener
 crowdproj-generator = { id = "com.crowdproj.generator", version = "0.4.0" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 shadowJar = { id = "com.gradleup.shadow", version = "9.3.2" }
+
+# Spring
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+spring-dependencies = { id = "io.spring.dependency-management", version = "1.1.7" }
+spring-kotlin = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
+
+# Docker
+muschko-remote = { id = "com.bmuschko.docker-remote-api", version.ref = "muschko" }
+muschko-java = { id = "com.bmuschko.docker-java-application", version.ref = "muschko" }

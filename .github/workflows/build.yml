@@ -56,6 +56,8 @@ jobs:
 #      - name: Install curl-dev
 #        run: sudo apt-get update && sudo apt-get install -y libcurl4-openssl-dev libpq-dev libpq5
 
+#      - name: Run Unit Tests
+#        run: gradle check --info --build-cache
       - name: Build Infrastructure
         run: gradle buildInfra --info --build-cache
 #        - name: Build App Images

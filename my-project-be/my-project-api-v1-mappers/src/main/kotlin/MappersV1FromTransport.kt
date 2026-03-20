@@ -62,7 +62,7 @@ fun CatalogContext.fromTransport(request: StorageUpdateRequest) {
 }
 
 fun CatalogContext.fromTransport(request: StorageDeleteRequest) {
-    command = CatalogCommand.UPDATE
+    command = CatalogCommand.DELETE
     storageRequest = request.storage?.fromTransport() ?: Storage()
     workMode = request.debug.fromTransportToWorkMode()
     stubCase = request.debug.fromTransportToStubCase()

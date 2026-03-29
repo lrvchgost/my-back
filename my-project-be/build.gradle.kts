@@ -28,6 +28,15 @@ tasks {
     register("build" ) {
         group = "build"
     }
+    register("clean" ) {
+        group = "build"
+        subprojects.forEach { proj ->
+            println("PROJ $proj")
+            proj.getTasksByName("clean", false).also {
+                this@register.dependsOn(it)
+            }
+        }
+    }
     register("check" ) {
         group = "verification"
         subprojects.forEach { proj ->
@@ -36,5 +45,8 @@ tasks {
                 this@register.dependsOn(it)
             }
         }
+    }
+    register("buildImages") {
+        dependsOn(project("my-project-app-spring").tasks.getByName("bootBuildImage"))
     }
 }

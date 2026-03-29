@@ -56,6 +56,7 @@ class MapperTest {
             assertEquals(CatalogStubs.SUCCESS, context.stubCase)
             assertEquals(CatalogWorkMode.STUB, context.workMode)
             assertEquals(expected, context.storageRequest)
+            assertEquals(CatalogCommand.CREATE, context.command)
         }
 
         @Test
@@ -109,6 +110,7 @@ class MapperTest {
             assertEquals(CatalogStubs.SUCCESS, context.stubCase)
             assertEquals(CatalogWorkMode.STUB, context.workMode)
             assertEquals(expected, context.storageRequest)
+            assertEquals(CatalogCommand.READ, context.command)
         }
 
         @Test
@@ -164,6 +166,7 @@ class MapperTest {
             assertEquals(CatalogStubs.SUCCESS, context.stubCase)
             assertEquals(CatalogWorkMode.STUB, context.workMode)
             assertEquals(expected, context.storageRequest)
+            assertEquals(CatalogCommand.UPDATE, context.command)
         }
 
         @Test
@@ -219,6 +222,7 @@ class MapperTest {
             assertEquals(CatalogStubs.SUCCESS, context.stubCase)
             assertEquals(CatalogWorkMode.STUB, context.workMode)
             assertEquals(expected, context.storageRequest)
+            assertEquals(CatalogCommand.DELETE, context.command)
         }
 
         @Test
@@ -270,6 +274,7 @@ class MapperTest {
             assertEquals(CatalogStubs.SUCCESS, context.stubCase)
             assertEquals(CatalogWorkMode.STUB, context.workMode)
             assertEquals(expected, context.storageFilterRequest)
+            assertEquals(CatalogCommand.SEARCH, context.command)
         }
 
         @Test
@@ -327,6 +332,7 @@ class MapperTest {
             assertEquals(CatalogStubs.SUCCESS, context.stubCase)
             assertEquals(CatalogWorkMode.STUB, context.workMode)
             assertEquals(expected, context.storagesRequest)
+            assertEquals(CatalogCommand.OPTIMIZE, context.command)
         }
 
         @Test

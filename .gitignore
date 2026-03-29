@@ -11,3 +11,4 @@
 ### Kotlin ###
 /.kotlin/
 **/.kotlin/**
+**/gen/**

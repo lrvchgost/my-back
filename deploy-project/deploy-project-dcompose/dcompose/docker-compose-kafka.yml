@@ -56,15 +56,15 @@ services:
     networks:
       - app-tier
 
-  app-kafka:
-    image: ok-marketplace-app-kafka:latest
-    depends_on:
-      kafka:
-        condition: service_healthy
-    environment:
-      KAFKA_HOSTS: "kafka:9092"
-    networks:
-      - app-tier
+#  app-kafka:
+#    image: my-project-app-kafka:latest
+#    depends_on:
+#      kafka:
+#        condition: service_healthy
+#    environment:
+#      KAFKA_HOSTS: "kafka:9092"
+#    networks:
+#      - app-tier
 
 networks:
   app-tier:

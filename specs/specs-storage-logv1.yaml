@@ -1,6 +1,6 @@
-openapi: 3.0.4
+openapi: 3.0.3
 info:
-  title: Catalog of storages log models
+  title: "Catalog of storages log models ${VERSION_APP}"
   description: Log models for logging services of catalog of storages
   license:
     name: Apache 2.0

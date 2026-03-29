@@ -12,7 +12,8 @@ kotlin {
                 api("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
 //                implementation(libs.kotlinx.serialization.core)
 //                implementation(libs.kotlinx.serialization.json)
-                api("ru.otus.otuskotlin.lrvch.libs:my-project-lib-logging-common")
+//                api("ru.otus.otuskotlin.lrvch.libs:my-project-lib-logging-common")
+                api(libs.cofs.logs.common)
             }
         }
         commonTest {

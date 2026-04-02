@@ -1,0 +1,97 @@
+package ru.otus.otuskotlin.lrvch.biz.stubs
+
+import kotlinx.coroutines.test.runTest
+import ru.otus.otuskotlin.lrvch.biz.CatalogProcessor
+import ru.otus.otuskotlin.lrvch.common.CatalogContext
+import ru.otus.otuskotlin.lrvch.common.models.CatalogCommand
+import ru.otus.otuskotlin.lrvch.common.models.CatalogRequestId
+import ru.otus.otuskotlin.lrvch.common.models.CatalogState
+import ru.otus.otuskotlin.lrvch.common.models.CatalogWorkMode
+import ru.otus.otuskotlin.lrvch.common.models.Storage
+import ru.otus.otuskotlin.lrvch.common.stubs.CatalogStubs
+import ru.otus.otuskotlin.lrvch.stubs.CatalogStorageStub
+import kotlin.test.Test
+import kotlin.test.assertEquals
+
+class StorageDeleteStubTest {
+
+    private val processor = CatalogProcessor()
+    val id = CatalogRequestId("666")
+
+    @Test
+    fun delete() = runTest {
+
+        val ctx = CatalogContext(
+            command = CatalogCommand.DELETE,
+            state = CatalogState.NONE,
+            workMode = CatalogWorkMode.STUB,
+            stubCase = CatalogStubs.SUCCESS,
+            storageRequest = Storage(
+                id = id,
+            ),
+        )
+        processor.exec(ctx)
+
+        val stub = CatalogStorageStub.get()
+        assertEquals(id, ctx.storageResponse.id)
+        assertEquals(stub.title, ctx.storageResponse.title)
+        assertEquals(stub.description, ctx.storageResponse.description)
+        assertEquals(stub.paymentType, ctx.storageResponse.paymentType)
+        assertEquals(stub.readSpeed, ctx.storageResponse.readSpeed)
+//        with(CatalogStorageStub.get()) {
+//            assertEquals(id, ctx.storageResponse.id)
+//            assertEquals(title, ctx.storageResponse.title)
+//            assertEquals(description, ctx.storageResponse.description)
+//            assertEquals(paymentType, ctx.storageResponse.paymentType)
+//            assertEquals(readSpeed, ctx.storageResponse.readSpeed)
+//        }
+    }
+
+    @Test
+    fun badId() = runTest {
+        val ctx = CatalogContext(
+            command = CatalogCommand.DELETE,
+            state = CatalogState.NONE,
+            workMode = CatalogWorkMode.STUB,
+            stubCase = CatalogStubs.BAD_ID,
+            storageRequest = Storage(),
+        )
+
+        processor.exec(ctx)
+        assertEquals(Storage(), ctx.storageResponse)
+        assertEquals("id", ctx.errors.firstOrNull()?.field)
+        assertEquals("validation", ctx.errors.firstOrNull()?.group)
+    }
+
+    @Test
+    fun databaseError() = runTest {
+        val ctx = CatalogContext(
+            command = CatalogCommand.DELETE,
+            state = CatalogState.NONE,
+            workMode = CatalogWorkMode.STUB,
+            stubCase = CatalogStubs.DB_ERROR,
+            storageRequest = Storage(
+                id = id,
+            ),
+        )
+        processor.exec(ctx)
+        assertEquals(Storage(), ctx.storageResponse)
+        assertEquals("internal", ctx.errors.firstOrNull()?.group)
+    }
+
+    @Test
+    fun badNoCase() = runTest {
+        val ctx = CatalogContext(
+            command = CatalogCommand.DELETE,
+            state = CatalogState.NONE,
+            workMode = CatalogWorkMode.STUB,
+            stubCase = CatalogStubs.BAD_TITLE,
+            storageRequest = Storage(
+                id = id,
+            ),
+        )
+        processor.exec(ctx)
+        assertEquals(Storage(), ctx.storageResponse)
+        assertEquals("stub", ctx.errors.firstOrNull()?.field)
+    }
+}

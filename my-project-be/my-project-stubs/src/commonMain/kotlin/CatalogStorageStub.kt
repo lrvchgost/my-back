@@ -1,6 +1,8 @@
 package ru.otus.otuskotlin.lrvch.stubs
 
+import ru.otus.otuskotlin.lrvch.common.models.CatalogPaymentType
 import ru.otus.otuskotlin.lrvch.common.models.CatalogRequestId
+import ru.otus.otuskotlin.lrvch.common.models.SpeedType
 import ru.otus.otuskotlin.lrvch.common.models.Storage
 import ru.otus.otuskotlin.lrvch.common.models.StorageFilter
 import ru.otus.otuskotlin.lrvch.common.models.StorageLock
@@ -50,8 +52,8 @@ object CatalogStorageStub {
         title = "$id ${filter.searchString}",
         availability = filter.availability,
         capacity = filter.capacity,
-        paymentType = filter.paymentType,
-        readSpeed = filter.readSpeed,
-        writeSpeed = filter.writeSpeed,
+        paymentType = filter.paymentType.takeIf { it != CatalogPaymentType.NONE } ?: base.paymentType,
+        readSpeed = filter.readSpeed.takeIf { it != SpeedType.NONE } ?: base.readSpeed,
+        writeSpeed = filter.writeSpeed.takeIf { it != SpeedType.NONE } ?: base.writeSpeed
     )
 }

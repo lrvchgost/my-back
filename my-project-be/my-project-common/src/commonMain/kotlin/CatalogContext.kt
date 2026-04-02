@@ -15,6 +15,7 @@ data class CatalogContext(
     var state: CatalogState = CatalogState.NONE,
     var errors: MutableList<CatalogError> = mutableListOf(),
 
+    var coreSettings: CatalogCoreSettings = CatalogCoreSettings(),
     var workMode: CatalogWorkMode = CatalogWorkMode.PROD,
     var stubCase: CatalogStubs = CatalogStubs.NONE,
 

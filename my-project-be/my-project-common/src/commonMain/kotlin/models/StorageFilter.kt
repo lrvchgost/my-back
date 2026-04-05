@@ -1,10 +1,18 @@
 package ru.otus.otuskotlin.lrvch.common.models
 
 data class StorageFilter(
-    val searchString: String = "",
-    val availability: String = "",
-    val capacity: String = "",
-    val paymentType: CatalogPaymentType = CatalogPaymentType.NONE,
-    val readSpeed: SpeedType = SpeedType.NONE,
-    val writeSpeed: SpeedType = SpeedType.NONE,
-)
+    var searchString: String = "",
+    var availability: String = "",
+    var capacity: String = "",
+    var paymentType: CatalogPaymentType = CatalogPaymentType.NONE,
+    var readSpeed: SpeedType = SpeedType.NONE,
+    var writeSpeed: SpeedType = SpeedType.NONE
+) {
+    fun deepCopy(): StorageFilter = copy()
+
+    fun isEmpty() = this == NONE
+
+    companion object {
+        private val NONE = StorageFilter()
+    }
+}

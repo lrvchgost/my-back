@@ -11,10 +11,3 @@ data class CatalogError(
     val level: LogLevel = LogLevel.ERROR,
     val exception: Throwable? = null,
 )
-
-inline fun CatalogContext.addError(vararg error: CatalogError) = errors.addAll(error)
-
-inline fun CatalogContext.fail(error: CatalogError) {
-    addError(error)
-    state = CatalogState.FAILED
-}

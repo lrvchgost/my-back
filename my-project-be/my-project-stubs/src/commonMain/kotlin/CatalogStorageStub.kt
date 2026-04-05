@@ -13,8 +13,11 @@ import ru.otus.otuskotlin.lrvch.stubs.CatalogStubStorages.EMPTY
 object CatalogStorageStub {
     private const val defaultIdValue = "111"
     private const val defaultLockValue = "123"
+    private const val defaultIdUuidValue = "508885e1-41ed-401b-b4d7-df0aa6617094"
 
     fun getDefaultId() = CatalogRequestId(defaultIdValue)
+
+    fun getDefaultUuid() = CatalogRequestId(defaultIdUuidValue)
 
     fun getDefaultLock() = StorageLock(defaultLockValue)
 

@@ -21,3 +21,4 @@ pluginManagement {
 }
 
 include(":deploy-project-dcompose")
+include(":deploy-project-migration-pg")

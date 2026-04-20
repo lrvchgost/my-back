@@ -4,7 +4,11 @@ plugins {
 }
 
 group = "ru.otus.otuskotlin.lrvch"
-version = "1.0"
+version = "0.0.1"
+
+base {
+    archivesName.set("dcompose")
+}
 
 allprojects {
     repositories {
@@ -21,5 +25,6 @@ tasks {
     register("buildInfra") {
         group = "build"
         dependsOn(project(":deploy-project-dcompose").getTasksByName("publish",false))
+        dependsOn(project(":deploy-project-migration-pg").getTasksByName("buildImages",false))
     }
 }

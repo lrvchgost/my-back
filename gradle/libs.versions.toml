@@ -27,7 +27,8 @@ spring-boot = "3.4.0"
 muschko = "9.4.0"
 
 #Testing
-testcontainers = "1.21.4"
+#testcontainers = "1.21.4"
+testcontainers = "2.0.4"
 
 [libraries]
 plugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }

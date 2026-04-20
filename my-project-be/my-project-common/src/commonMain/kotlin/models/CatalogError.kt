@@ -1,5 +1,6 @@
 package ru.otus.otuskotlin.lrvch.common.models
 
+import ru.otus.otuskotlin.lrvch.common.CatalogContext
 import ru.otus.otuskotlin.lrvch.logging.common.LogLevel
 
 data class CatalogError(

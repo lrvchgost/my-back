@@ -13,6 +13,10 @@ data class Storage(
     var lock: StorageLock = StorageLock.NONE,
     var permissionsClient: MutableSet<StoragePermissionClient> = mutableSetOf()
 ) {
+    fun deepCopy(): Storage = copy(
+        permissionsClient = permissionsClient.toMutableSet(),
+    )
+
     fun isEmpty() = this == NONE
 
     companion object {

@@ -144,6 +144,7 @@ private fun StorageDebug?.fromTransportToStubCase(): CatalogStubs = when (this?.
     StorageRequestDebugStubs.SUCCESS -> CatalogStubs.SUCCESS
     StorageRequestDebugStubs.NOT_FOUND -> CatalogStubs.NOT_FOUND
     StorageRequestDebugStubs.CANNOT_DELETE -> CatalogStubs.CANNOT_DELETE
+    StorageRequestDebugStubs.DB_ERROR -> CatalogStubs.DB_ERROR
     null -> CatalogStubs.BAD_ID
 }
 

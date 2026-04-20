@@ -1,0 +1,162 @@
+package ru.otus.otuskotlin.lrvch.libs.cor
+
+import TestVisitor
+import kotlinx.coroutines.test.runTest
+import ru.otus.otuskotlin.lrvch.libs.cor.handlers.CopyTreeAndPrintTasksGraphVisitor
+import ru.otus.otuskotlin.lrvch.libs.cor.handlers.PrintTasksOrderVisitor
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFails
+
+class CorBaseTest {
+
+    private suspend fun execute(dsl: ICorExecDsl<TestContext>): TestContext {
+        val ctx = TestContext()
+        dsl.build().exec(ctx)
+        return ctx
+    }
+
+    private suspend fun executeVisitor(dsl: ICorExecDsl<TestContext>): TestContext {
+        val ctx = TestContext()
+        val visitor = TestVisitor<TestContext>()
+
+        val chain = dsl.build()
+
+        chain.visit(visitor, ctx)
+
+        return ctx
+    }
+
+    @Test
+    fun `handle should execute`() = runTest {
+        val chain = rootChain<TestContext> {
+            worker {
+                handle { history += "w1; " }
+            }
+        }
+        assertEquals("w1; ", execute(chain).history)
+        assertEquals("w1; ", executeVisitor(chain).history)
+    }
+
+    @Test
+    fun `on should check condition`() = runTest {
+        val chain = rootChain<TestContext> {
+            worker {
+                on { status == TestContext.CorStatuses.ERROR }
+                handle { history += "w1; " }
+            }
+            worker {
+                on { status == TestContext.CorStatuses.NONE }
+                handle {
+                    history += "w2; "
+                    status = TestContext.CorStatuses.FAILING
+                }
+            }
+            worker {
+                on { status == TestContext.CorStatuses.FAILING }
+                handle { history += "w3; " }
+            }
+        }
+        assertEquals("w2; w3; ", execute(chain).history)
+        assertEquals("w2; w3; ", executeVisitor(chain).history)
+    }
+
+    @Test
+    fun `except should execute when exception`() = runTest {
+        val chain = rootChain<TestContext> {
+            worker {
+                handle { throw RuntimeException("some error") }
+                except { history += it.message }
+            }
+        }
+        assertEquals("some error", execute(chain).history)
+        assertEquals("some error", executeVisitor(chain).history)
+    }
+
+    @Test
+    fun `should throw when exception and no except`() = runTest {
+        val chain = rootChain<TestContext> {
+            worker("throw", "Выбрасывает ошибку") { throw RuntimeException("some error") }
+        }
+        assertFails {
+            execute(chain)
+        }
+        assertFails {
+            executeVisitor(chain)
+        }
+    }
+
+    @Test
+    fun `complex chain example`() = runTest {
+        val chain = rootChain<TestContext> {
+            title = "root chain"
+
+            worker {
+                title = "worker"
+                description = "При старте обработки цепочки, статус еще не установлен. Проверяем его"
+
+                on { status == TestContext.CorStatuses.NONE }
+                handle { status = TestContext.CorStatuses.RUNNING }
+                except { status = TestContext.CorStatuses.ERROR }
+            }
+
+            chain {
+                title = "chain"
+                on { status == TestContext.CorStatuses.RUNNING }
+
+                worker("worker") {
+                    some = 2
+                }
+            }
+
+            chain {
+                title = "chain"
+                on { status == TestContext.CorStatuses.RUNNING }
+
+                worker("worker") {
+                    some = 2
+                }
+
+                worker(
+                    title = "worker",
+                    description = "Пример использования обработчика в виде лямбды"
+                ) {
+                    some += 4
+                }
+
+                worker {
+                    title = "worker"
+                }
+
+                chain {
+                    title = "chain"
+                    on { status == TestContext.CorStatuses.RUNNING }
+
+                    worker("worker") {
+                        some = 2
+                    }
+                }
+            }
+
+            printResult()
+
+        }.build()
+
+        val ctx = TestContext()
+//        chain.exec(ctx)
+//        println("Complete: $ctx")
+
+        val visitor = CopyTreeAndPrintTasksGraphVisitor<TestContext>()
+        chain.visit(visitor, ctx)
+        println(visitor.getGraph())
+
+        val visitor2 = PrintTasksOrderVisitor<TestContext>()
+        chain.visit(visitor2, ctx)
+        println(visitor2.getTasks())
+    }
+
+    private fun ICorChainDsl<TestContext>.printResult() = worker(title = "Print example") {
+        println("some = $some")
+    }
+}
+

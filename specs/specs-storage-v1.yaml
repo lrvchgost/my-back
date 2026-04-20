@@ -481,3 +481,4 @@ components:
         - badSpeedType
         - cannotDelete
         - badSearchString
+        - dbError

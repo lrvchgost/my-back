@@ -15,6 +15,7 @@ data class CatalogContext(
     var state: CatalogState = CatalogState.NONE,
     var errors: MutableList<CatalogError> = mutableListOf(),
 
+    var coreSettings: CatalogCoreSettings = CatalogCoreSettings(),
     var workMode: CatalogWorkMode = CatalogWorkMode.PROD,
     var stubCase: CatalogStubs = CatalogStubs.NONE,
 
@@ -25,4 +26,12 @@ data class CatalogContext(
     var storageFilterRequest: StorageFilter = StorageFilter(),
     var storageResponse: Storage = Storage(),
     var storagesResponse: MutableList<Storage> = mutableListOf(),
+
+    var storageValidating: Storage = Storage(),
+    var storagesValidating: MutableList<Storage> = mutableListOf(),
+    var storageFilterValidating: StorageFilter = StorageFilter(),
+
+    var storageValidated: Storage = Storage(),
+    var storagesValidated: MutableList<Storage> = mutableListOf(),
+    var storageFilterValidated: StorageFilter = StorageFilter(),
 )

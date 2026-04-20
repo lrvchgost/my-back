@@ -10,5 +10,6 @@ enum class CatalogStubs {
     BAD_SEARCH,
     CANNOT_DELETE,
     BAD_PAYMENT_METHOD,
-    BAD_SPEED_TYPE
+    BAD_SPEED_TYPE,
+    DB_ERROR,
 }

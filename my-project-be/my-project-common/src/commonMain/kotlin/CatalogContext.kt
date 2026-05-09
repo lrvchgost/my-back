@@ -8,6 +8,7 @@ import ru.otus.otuskotlin.lrvch.common.models.CatalogState
 import ru.otus.otuskotlin.lrvch.common.models.CatalogWorkMode
 import ru.otus.otuskotlin.lrvch.common.models.Storage
 import ru.otus.otuskotlin.lrvch.common.models.StorageFilter
+import ru.otus.otuskotlin.lrvch.common.repo.IRepoStorage
 import ru.otus.otuskotlin.lrvch.common.stubs.CatalogStubs
 
 data class CatalogContext(
@@ -34,4 +35,10 @@ data class CatalogContext(
     var storageValidated: Storage = Storage(),
     var storagesValidated: MutableList<Storage> = mutableListOf(),
     var storageFilterValidated: StorageFilter = StorageFilter(),
+
+    var storageRepo: IRepoStorage = IRepoStorage.NONE,
+    var storageRepoRead: Storage = Storage(), // То, что прочитали из репозитория
+    var storageRepoPrepare: Storage = Storage(), // То, что готовим для сохранения в БД
+    var storageRepoDone: Storage = Storage(),  // Результат, полученный из БД
+    var storagesRepoDone: MutableList<Storage> = mutableListOf(),
 )

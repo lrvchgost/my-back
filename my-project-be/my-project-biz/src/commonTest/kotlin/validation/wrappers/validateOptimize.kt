@@ -10,6 +10,7 @@ import ru.otus.otuskotlin.lrvch.common.models.CatalogState
 import ru.otus.otuskotlin.lrvch.common.models.CatalogWorkMode
 import ru.otus.otuskotlin.lrvch.common.models.SpeedType
 import ru.otus.otuskotlin.lrvch.common.models.Storage
+import ru.otus.otuskotlin.lrvch.common.models.StorageId
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
@@ -20,7 +21,7 @@ fun validationOptimizeCorrect(command: CatalogCommand, processor: CatalogProcess
         workMode = CatalogWorkMode.TEST,
         storagesRequest = mutableListOf(
             Storage(
-                id = CatalogRequestId("1"),
+                id = StorageId("1"),
                 title = "abc",
                 description = "abc",
                 paymentType = CatalogPaymentType.FREE,
@@ -28,7 +29,7 @@ fun validationOptimizeCorrect(command: CatalogCommand, processor: CatalogProcess
                 readSpeed = SpeedType._100,
             ),
             Storage(
-                id = CatalogRequestId("1"),
+                id = StorageId("1"),
                 title = "abc",
                 description = "abc",
                 paymentType = CatalogPaymentType.FREE,
@@ -50,7 +51,7 @@ fun validationOptimizePaymentIncompatible(command: CatalogCommand, processor: Ca
         workMode = CatalogWorkMode.TEST,
         storagesRequest = mutableListOf(
             Storage(
-                id = CatalogRequestId("1"),
+                id = StorageId("1"),
                 title = "abc",
                 description = "abc",
                 paymentType = CatalogPaymentType.LICENSE,
@@ -58,7 +59,7 @@ fun validationOptimizePaymentIncompatible(command: CatalogCommand, processor: Ca
                 readSpeed = SpeedType._100,
             ),
             Storage(
-                id = CatalogRequestId("1"),
+                id = StorageId("1"),
                 title = "abc",
                 description = "abc",
                 paymentType = CatalogPaymentType.FREE,
@@ -79,7 +80,7 @@ fun validationOptimizeWriteSpeedIncompatible(command: CatalogCommand, processor:
         workMode = CatalogWorkMode.TEST,
         storagesRequest = mutableListOf(
             Storage(
-                id = CatalogRequestId("1"),
+                id = StorageId("1"),
                 title = "abc",
                 description = "abc",
                 paymentType = CatalogPaymentType.FREE,
@@ -87,7 +88,7 @@ fun validationOptimizeWriteSpeedIncompatible(command: CatalogCommand, processor:
                 readSpeed = SpeedType._100,
             ),
             Storage(
-                id = CatalogRequestId("1"),
+                id = StorageId("1"),
                 title = "abc",
                 description = "abc",
                 paymentType = CatalogPaymentType.FREE,
@@ -108,7 +109,7 @@ fun validationOptimizeReadSpeedIncompatible(command: CatalogCommand, processor: 
         workMode = CatalogWorkMode.TEST,
         storagesRequest = mutableListOf(
             Storage(
-                id = CatalogRequestId("1"),
+                id = StorageId("1"),
                 title = "abc",
                 description = "abc",
                 paymentType = CatalogPaymentType.FREE,
@@ -116,7 +117,7 @@ fun validationOptimizeReadSpeedIncompatible(command: CatalogCommand, processor: 
                 readSpeed = SpeedType._200,
             ),
             Storage(
-                id = CatalogRequestId("1"),
+                id = StorageId("1"),
                 title = "abc",
                 description = "abc",
                 paymentType = CatalogPaymentType.FREE,

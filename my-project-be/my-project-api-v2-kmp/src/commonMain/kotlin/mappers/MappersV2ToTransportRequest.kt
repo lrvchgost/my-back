@@ -11,13 +11,13 @@ import ru.otus.otuskotlin.lrvch.common.models.StorageFilter
 import ru.otus.otuskotlin.lrvch.common.models.StorageLock
 
 fun Storage.toTransportCreateStorage() = StorageCreateObject(
-    title = title,
-    description = description,
+    title = title.takeIf {it.isNotBlank()  },
+    description = description.takeIf {it.isNotBlank()},
     paymentType = paymentType.toTransport(),
     readSpeed = readSpeed.toTransport(),
     writeSpeed = writeSpeed.toTransport(),
-    capacity = capacity,
-    availability = availability,
+    capacity = capacity.takeIf {it.isNotBlank()},
+    availability = availability.takeIf {it.isNotBlank()},
     enableOptimize = optimizeEnabled.toTransportOptimizeEnabled(),
 )
 
@@ -34,13 +34,13 @@ fun Storage.toTransportDeleteStorage() = StorageDeleteObject(
 
 fun Storage.toTransportUpdateStorage() = StorageUpdateObject(
     id = id.toTransport(),
-    title = title,
-    description = description,
+    title = title.takeIf {it.isNotBlank()},
+    description = description.takeIf {it.isNotBlank()},
     paymentType = paymentType.toTransport(),
     readSpeed = readSpeed.toTransport(),
     writeSpeed = writeSpeed.toTransport(),
-    capacity = capacity,
-    availability = availability,
+    capacity = capacity.takeIf {it.isNotBlank()},
+    availability = availability.takeIf {it.isNotBlank()},
     lock = lock.toTransport(),
     enableOptimize = optimizeEnabled.toTransportOptimizeEnabled(),
 )

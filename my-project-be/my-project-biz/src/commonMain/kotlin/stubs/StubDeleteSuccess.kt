@@ -4,6 +4,7 @@ import ru.otus.otuskotlin.lrvch.common.CatalogContext
 import ru.otus.otuskotlin.lrvch.common.CatalogCoreSettings
 import ru.otus.otuskotlin.lrvch.common.models.CatalogRequestId
 import ru.otus.otuskotlin.lrvch.common.models.CatalogState
+import ru.otus.otuskotlin.lrvch.common.models.StorageId
 import ru.otus.otuskotlin.lrvch.common.stubs.CatalogStubs
 import ru.otus.otuskotlin.lrvch.libs.cor.ICorChainDsl
 import ru.otus.otuskotlin.lrvch.libs.cor.worker
@@ -21,7 +22,7 @@ fun ICorChainDsl<CatalogContext>.stubDeleteSuccess(title: String, corSettings: C
         logger.doWithLogging(id = this.requestId.asString(), LogLevel.DEBUG) {
             state = CatalogState.FINISHED
             storageResponse = CatalogStorageStub.prepareResult {
-                storageRequest.id.takeIf { it != CatalogRequestId.NONE }?.also { this.id = it }
+                storageRequest.id.takeIf { it != StorageId.NONE }?.also { this.id = it }
             }
         }
     }

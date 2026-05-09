@@ -40,6 +40,13 @@ dependencies {
     testImplementation(kotlin("test-junit5"))
     testImplementation(libs.spring.test)
     testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.spring.webflux.test)
+    testImplementation(libs.spring.mockk)
+
+    // DB
+    implementation(projects.myProjectRepoInmemory)
+    testImplementation(projects.myProjectRepoCommon)
+    testImplementation(projects.myProjectStubs)
 }
 
 tasks {

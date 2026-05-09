@@ -24,6 +24,7 @@ import ru.otus.otuskotlin.lrvch.common.models.CatalogPaymentType
 import ru.otus.otuskotlin.lrvch.common.models.CatalogRequestId
 import ru.otus.otuskotlin.lrvch.common.models.CatalogState
 import ru.otus.otuskotlin.lrvch.common.models.CatalogWorkMode
+import ru.otus.otuskotlin.lrvch.common.models.StorageId
 import ru.otus.otuskotlin.lrvch.common.models.SpeedType as SpeedTypeModel
 import ru.otus.otuskotlin.lrvch.common.models.StorageLock
 import ru.otus.otuskotlin.lrvch.common.stubs.CatalogStubs
@@ -45,7 +46,7 @@ class MapperTest {
             )
 
             val expected = CatalogStorageStub.prepareResult {
-                id = CatalogRequestId.NONE
+                id = StorageId.NONE
                 lock = StorageLock.NONE
                 permissionsClient.clear()
             }

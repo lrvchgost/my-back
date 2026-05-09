@@ -5,6 +5,7 @@ import ru.otus.otuskotlin.lrvch.common.models.CatalogRequestId
 import ru.otus.otuskotlin.lrvch.common.models.SpeedType
 import ru.otus.otuskotlin.lrvch.common.models.Storage
 import ru.otus.otuskotlin.lrvch.common.models.StorageFilter
+import ru.otus.otuskotlin.lrvch.common.models.StorageId
 import ru.otus.otuskotlin.lrvch.common.models.StorageLock
 import ru.otus.otuskotlin.lrvch.common.models.StoragePermissionClient
 import kotlin.String
@@ -15,7 +16,7 @@ object CatalogStubStorages {
 
     val BASE: Storage
         get() = Storage(
-            id = CatalogRequestId("111"),
+            id = StorageId("111"),
             title = "Some storage",
             description = "Some description",
             paymentType = CatalogPaymentType.FREE,

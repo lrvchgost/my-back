@@ -26,3 +26,8 @@ springdoc:
         url: specs-storage-v2.yaml
       - name: logv1
         url: specs-storage-logv1.yaml
+
+catalogOfStorages:
+  repository:
+    test: "inmemory"
+    prod: "$DB_TYPE_PROD:inmemory"

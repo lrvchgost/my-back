@@ -3,6 +3,7 @@ package ru.otus.otuskotlin.lrvch.biz.validation.helpers
 import ru.otus.otuskotlin.lrvch.common.CatalogContext
 import ru.otus.otuskotlin.lrvch.common.models.CatalogRequestId
 import ru.otus.otuskotlin.lrvch.common.models.StorageFilter
+import ru.otus.otuskotlin.lrvch.common.models.StorageId
 import ru.otus.otuskotlin.lrvch.common.models.StorageLock
 
 internal fun CatalogContext.hasNoContent(): Boolean {
@@ -20,7 +21,7 @@ internal fun CatalogContext.idIsEmpty(): Boolean {
 
 internal fun CatalogContext.idHasNotProperFormat(): Boolean {
     val regExp = Regex("^[0-9a-zA-Z#:-]+$")
-    return storageValidating.id != CatalogRequestId.NONE && !storageValidating.id.asString().matches(regExp)
+    return storageValidating.id != StorageId.NONE && !storageValidating.id.asString().matches(regExp)
 }
 
 internal fun CatalogContext.lockIsEmpty(): Boolean {

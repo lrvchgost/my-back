@@ -32,7 +32,7 @@ fun mpLoggerSocket(
 )
 
 @Suppress("unused")
-fun mpLoggerSocket(cls: KClass<*>, settings: SocketLoggerSettings = SocketLoggerSettings()): IMpLogWrapper = mpLoggerSocket(
+fun mpLoggerSocket(cls: KClass<*>, settings: SocketLoggerSettings = SocketLoggerSettings()): IUniformLogWrapper = mpLoggerSocket(
     loggerId = cls.qualifiedName ?: "",
     settings = settings,
 )

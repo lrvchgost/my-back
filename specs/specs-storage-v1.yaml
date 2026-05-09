@@ -198,6 +198,7 @@ components:
           delete: '#/components/schemas/StorageDeleteResponse'
           search: '#/components/schemas/StorageSearchResponse'
           optimize: '#/components/schemas/OptimizeStoragesResponse'
+          init: '#/components/schemas/StorageInitResponse'
 
     StorageResponseObject:
       allOf:
@@ -237,6 +238,10 @@ components:
           $ref: '#/components/schemas/SpeedType'
         writeSpeed:
           $ref: '#/components/schemas/SpeedType'
+
+    StorageInitResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
 
     StorageCreateObject:
       allOf:

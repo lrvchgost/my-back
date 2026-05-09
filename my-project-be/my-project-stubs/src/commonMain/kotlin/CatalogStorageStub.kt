@@ -1,10 +1,10 @@
 package ru.otus.otuskotlin.lrvch.stubs
 
 import ru.otus.otuskotlin.lrvch.common.models.CatalogPaymentType
-import ru.otus.otuskotlin.lrvch.common.models.CatalogRequestId
 import ru.otus.otuskotlin.lrvch.common.models.SpeedType
 import ru.otus.otuskotlin.lrvch.common.models.Storage
 import ru.otus.otuskotlin.lrvch.common.models.StorageFilter
+import ru.otus.otuskotlin.lrvch.common.models.StorageId
 import ru.otus.otuskotlin.lrvch.common.models.StorageLock
 import ru.otus.otuskotlin.lrvch.stubs.CatalogStubStorages.BASE
 import ru.otus.otuskotlin.lrvch.stubs.CatalogStubStorages.DEFAULT_SEARCH_FILTER
@@ -15,9 +15,9 @@ object CatalogStorageStub {
     private const val defaultLockValue = "123"
     private const val defaultIdUuidValue = "508885e1-41ed-401b-b4d7-df0aa6617094"
 
-    fun getDefaultId() = CatalogRequestId(defaultIdValue)
+    fun getDefaultId() = StorageId(defaultIdValue)
 
-    fun getDefaultUuid() = CatalogRequestId(defaultIdUuidValue)
+    fun getDefaultUuid() = StorageId(defaultIdUuidValue)
 
     fun getDefaultLock() = StorageLock(defaultLockValue)
 
@@ -43,15 +43,15 @@ object CatalogStorageStub {
     )
 
     fun prepareOptimizeList() = mutableListOf(
-        EMPTY.copy(id = CatalogRequestId("1")),
-        EMPTY.copy(id = CatalogRequestId("2")),
-        EMPTY.copy(id = CatalogRequestId("3")),
-        EMPTY.copy(id = CatalogRequestId("4")),
-        EMPTY.copy(id = CatalogRequestId("5"))
+        EMPTY.copy(id = StorageId("1")),
+        EMPTY.copy(id = StorageId("2")),
+        EMPTY.copy(id = StorageId("3")),
+        EMPTY.copy(id = StorageId("4")),
+        EMPTY.copy(id = StorageId("5"))
     )
 
     fun makeSearchableStorage(id: String, base: Storage, filter: StorageFilter) = base.copy(
-        id = CatalogRequestId(id),
+        id = StorageId(id),
         title = "$id ${filter.searchString}",
         availability = filter.availability,
         capacity = filter.capacity,

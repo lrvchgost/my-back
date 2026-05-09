@@ -8,6 +8,7 @@ import ru.otus.otuskotlin.lrvch.common.models.CatalogRequestId
 import ru.otus.otuskotlin.lrvch.common.models.CatalogState
 import ru.otus.otuskotlin.lrvch.common.models.SpeedType
 import ru.otus.otuskotlin.lrvch.common.models.Storage
+import ru.otus.otuskotlin.lrvch.common.models.StorageId
 import ru.otus.otuskotlin.lrvch.libs.cor.rootChain
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -19,14 +20,14 @@ class ValidateStorageCompatibleTest {
             state = CatalogState.RUNNING, storagesValidating = mutableListOf(
                 Storage(
                     title = "",
-                    id = CatalogRequestId(""),
+                    id = StorageId(""),
                     paymentType = CatalogPaymentType.FREE,
                     readSpeed = SpeedType._100,
                     writeSpeed = SpeedType._100,
                 ),
                 Storage(
                     title = "",
-                    id = CatalogRequestId("2"),
+                    id = StorageId("2"),
                     paymentType = CatalogPaymentType.FREE,
                     readSpeed = SpeedType._100,
                     writeSpeed = SpeedType._100,
@@ -44,14 +45,14 @@ class ValidateStorageCompatibleTest {
             state = CatalogState.RUNNING, storagesValidating = mutableListOf(
                 Storage(
                     title = "",
-                    id = CatalogRequestId(""),
+                    id = StorageId(""),
                     paymentType = CatalogPaymentType.LICENSE,
                     readSpeed = SpeedType._100,
                     writeSpeed = SpeedType._100,
                 ),
                 Storage(
                     title = "",
-                    id = CatalogRequestId("2"),
+                    id = StorageId("2"),
                     paymentType = CatalogPaymentType.FREE,
                     readSpeed = SpeedType._100,
                     writeSpeed = SpeedType._100,
@@ -70,14 +71,14 @@ class ValidateStorageCompatibleTest {
             state = CatalogState.RUNNING, storagesValidating = mutableListOf(
                 Storage(
                     title = "",
-                    id = CatalogRequestId(""),
+                    id = StorageId(""),
                     paymentType = CatalogPaymentType.FREE,
                     readSpeed = SpeedType._200,
                     writeSpeed = SpeedType._100,
                 ),
                 Storage(
                     title = "",
-                    id = CatalogRequestId("2"),
+                    id = StorageId("2"),
                     paymentType = CatalogPaymentType.FREE,
                     readSpeed = SpeedType._100,
                     writeSpeed = SpeedType._100,
@@ -95,14 +96,14 @@ class ValidateStorageCompatibleTest {
             state = CatalogState.RUNNING, storagesValidating = mutableListOf(
                 Storage(
                     title = "",
-                    id = CatalogRequestId(""),
+                    id = StorageId(""),
                     paymentType = CatalogPaymentType.FREE,
                     readSpeed = SpeedType._100,
                     writeSpeed = SpeedType._200,
                 ),
                 Storage(
                     title = "",
-                    id = CatalogRequestId("2"),
+                    id = StorageId("2"),
                     paymentType = CatalogPaymentType.FREE,
                     readSpeed = SpeedType._100,
                     writeSpeed = SpeedType._100,

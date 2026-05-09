@@ -1,7 +1,7 @@
 package ru.otus.otuskotlin.lrvch.common.models
 
 data class Storage(
-    var id: CatalogRequestId = CatalogRequestId.NONE,
+    var id: StorageId = StorageId.NONE,
     var title: String = "",
     var description: String = "",
     var paymentType: CatalogPaymentType = CatalogPaymentType.NONE,

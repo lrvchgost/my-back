@@ -6,22 +6,18 @@ import ru.otus.otuskotlin.lrvch.api.v1.models.StorageOptimizeObject
 import ru.otus.otuskotlin.lrvch.api.v1.models.StorageReadObject
 import ru.otus.otuskotlin.lrvch.api.v1.models.StorageSearchFilter
 import ru.otus.otuskotlin.lrvch.api.v1.models.StorageUpdateObject
-import ru.otus.otuskotlin.lrvch.common.models.CatalogPaymentType
-import ru.otus.otuskotlin.lrvch.common.models.CatalogRequestId
-import ru.otus.otuskotlin.lrvch.common.models.SpeedType
 import ru.otus.otuskotlin.lrvch.common.models.Storage
 import ru.otus.otuskotlin.lrvch.common.models.StorageFilter
 import ru.otus.otuskotlin.lrvch.common.models.StorageLock
-import ru.otus.otuskotlin.lrvch.common.models.StoragePermissionClient
 
 fun Storage.toTransportCreateStorage() = StorageCreateObject(
-    title = title,
-    description = description,
+    title = title.takeIf { it.isNotBlank()  },
+    description = description.takeIf { it.isNotBlank() },
     paymentType = paymentType.toTransport(),
     readSpeed = readSpeed.toTransport(),
     writeSpeed = writeSpeed.toTransport(),
-    capacity = capacity,
-    availability = availability,
+    capacity = capacity.takeIf { it.isNotBlank() },
+    availability = availability.takeIf { it.isNotBlank() },
 )
 
 fun Storage.toTransportReadStorage() = StorageReadObject(
@@ -37,13 +33,13 @@ fun Storage.toTransportDeleteStorage() = StorageDeleteObject(
 
 fun Storage.toTransportUpdateStorage() = StorageUpdateObject(
     id = id.toTransport(),
-    title = title,
-    description = description,
+    title = title.takeIf { it.isNotBlank() },
+    description = description.takeIf { it.isNotBlank() },
     paymentType = paymentType.toTransport(),
     readSpeed = readSpeed.toTransport(),
     writeSpeed = writeSpeed.toTransport(),
-    capacity = capacity,
-    availability = availability,
+    capacity = capacity.takeIf { it.isNotBlank() },
+    availability = availability.takeIf { it.isNotBlank() },
     lock = lock.toTransport()
 )
 

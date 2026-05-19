@@ -25,6 +25,7 @@ ktor = "2.3.9"
 spring-boot = "4.0.5"
 
 liquibase = "4.27.0"
+exposed = "0.50.0"
 
 # Docker
 muschko = "9.4.0"
@@ -73,6 +74,7 @@ kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest"
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version = "5.2.1" }
 
 testcontainers-core = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers" }
+testcontainers-postgres = { module = "org.testcontainers:testcontainers-postgresql", version.ref = "testcontainers" }
 
 # Spring
 spring-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
@@ -88,6 +90,16 @@ kafka-client = { module = "org.apache.kafka:kafka-clients", version = "3.7.0" }
 
 # Databases
 db-cache4k = "io.github.reactivecircus.cache4k:cache4k:0.13.0"
+db-postgres = "org.postgresql:postgresql:42.7.3"
+db-hikari = "com.zaxxer:HikariCP:5.1.0"
+db-exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
+db-exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "exposed" }
+db-exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }
+
+# Liquidbase
+liquibase-core = {module = "org.liquibase:liquibase-core", version.ref = "liquibase"}
+liquibase-picocli = "info.picocli:picocli:4.7.5"
+liquibase-snakeyml = "org.yaml:snakeyaml:1.33"
 
 cofs-logs-common = { module = "ru.otus.otuskotlin.lrvch.libs:my-project-lib-logging-common", version.ref = "cofs" }
 cofs-logs-kermit = { module = "ru.otus.otuskotlin.lrvch.libs:my-project-lib-logging-kermit", version.ref = "cofs" }
@@ -99,6 +111,7 @@ cofs-logs-logback = { module = "ru.otus.otuskotlin.lrvch.libs:my-project-lib-log
 
 [bundles]
 kotest = ["kotest-junit5", "kotest-core", "kotest-property"]
+exposed = ["db-exposed-core", "db-exposed-dao", "db-exposed-jdbc"]
 
 [plugins]
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
@@ -117,3 +130,4 @@ spring-kotlin = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotl
 # Docker
 muschko-remote = { id = "com.bmuschko.docker-remote-api", version.ref = "muschko" }
 muschko-java = { id = "com.bmuschko.docker-java-application", version.ref = "muschko" }
+palantir-docker = "com.palantir.docker:0.36.0"

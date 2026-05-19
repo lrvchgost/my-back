@@ -1,6 +1,7 @@
 package ru.otus.otuskotlin.lrvch.backend.repo.tests
 
 import ru.otus.otuskotlin.lrvch.common.models.CatalogError
+import ru.otus.otuskotlin.lrvch.common.models.CatalogPaymentType
 import ru.otus.otuskotlin.lrvch.common.models.Storage
 import ru.otus.otuskotlin.lrvch.common.models.StorageId
 import ru.otus.otuskotlin.lrvch.common.repo.DbStorageIdRequest
@@ -37,7 +38,9 @@ abstract class RepoStorageReadTest {
 
     companion object : BaseInitStorages("read") {
         override val initObjects: List<Storage> = listOf(
-            createInitTestModel("read")
+            createInitTestModel("read").apply {
+                paymentType = CatalogPaymentType.FREE
+            }
         )
 
         val notFoundId = StorageId("ad-repo-read-notFound")

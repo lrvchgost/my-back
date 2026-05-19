@@ -29,3 +29,11 @@ catalogOfStorages:
   repository:
     test: "inmemory"
     prod: "$DB_TYPE_PROD:inmemory"
+
+psql:
+  schema: public
+  database: "${CATALOG_STORAGES_DB:catalog-of-storages}"
+  host: "${CATALOG_STORAGES_DB_HOST:localhost}"
+  port: 5433
+  user: "${CATALOG_STORAGES_DB_USER:postgres}"
+  password: "${CATALOG_STORAGES_DB_PASS:catalog-of-storages-pass}"

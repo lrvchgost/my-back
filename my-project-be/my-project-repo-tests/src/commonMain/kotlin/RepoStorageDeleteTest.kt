@@ -1,5 +1,6 @@
 package ru.otus.otuskotlin.lrvch.backend.repo.tests
 
+import ru.otus.otuskotlin.lrvch.common.models.CatalogPaymentType
 import ru.otus.otuskotlin.lrvch.common.models.Storage
 import ru.otus.otuskotlin.lrvch.common.models.StorageId
 import ru.otus.otuskotlin.lrvch.common.repo.DbStorageIdRequest
@@ -47,8 +48,8 @@ abstract class RepoStorageDeleteTest {
 
     companion object : BaseInitStorages("delete") {
         override val initObjects: List<Storage> = listOf(
-            createInitTestModel("delete"),
-            createInitTestModel("deleteLock"),
+            createInitTestModel("delete").apply { paymentType = CatalogPaymentType.FREE },
+            createInitTestModel("deleteLock").apply { paymentType = CatalogPaymentType.FREE },
         )
     }
 }

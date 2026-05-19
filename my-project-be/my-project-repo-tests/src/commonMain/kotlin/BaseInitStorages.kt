@@ -13,9 +13,9 @@ abstract class BaseInitStorages(private val op: String) : IInitObjects<Storage> 
     fun createInitTestModel(
         suf: String,
         lock: StorageLock = lockOld,
-        paymentType: CatalogPaymentType = CatalogPaymentType.NONE,
-        readSpeed: SpeedType = SpeedType.NONE,
-        writeSpeed: SpeedType = SpeedType.NONE,
+        paymentType: CatalogPaymentType = CatalogPaymentType.LICENSE,
+        readSpeed: SpeedType = SpeedType._100,
+        writeSpeed: SpeedType = SpeedType._100,
         optimizeEnabled: Boolean = false,
         capacity: String = "capacity",
         availability: String = "capacity",

@@ -10,7 +10,6 @@ enum class CatalogPaymentType {
 fun CatalogPaymentType.toNameOrNull(): String? = when(this) {
     CatalogPaymentType.NONE -> null
     CatalogPaymentType.FREE -> CatalogPaymentType.FREE.name
-    CatalogPaymentType.LICENSE -> ""
-    CatalogPaymentType.PREPAID -> ""
-
+    CatalogPaymentType.LICENSE -> CatalogPaymentType.LICENSE.name
+    CatalogPaymentType.PREPAID -> CatalogPaymentType.PREPAID.name
 }

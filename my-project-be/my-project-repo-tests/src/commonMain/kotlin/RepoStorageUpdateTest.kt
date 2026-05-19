@@ -1,6 +1,7 @@
 package ru.otus.otuskotlin.lrvch.backend.repo.tests
 
 import ru.otus.otuskotlin.lrvch.common.models.CatalogPaymentType
+import ru.otus.otuskotlin.lrvch.common.models.SpeedType
 import ru.otus.otuskotlin.lrvch.common.models.Storage
 import ru.otus.otuskotlin.lrvch.common.models.StorageId
 import ru.otus.otuskotlin.lrvch.common.models.StorageLock
@@ -30,6 +31,8 @@ abstract class RepoStorageUpdateTest {
             description = "update object description",
             paymentType = CatalogPaymentType.FREE,
             lock = initObjects.first().lock,
+            readSpeed = SpeedType._100,
+            writeSpeed = SpeedType._100,
         )
     }
     private val reqUpdateNotFound = Storage(
@@ -38,6 +41,8 @@ abstract class RepoStorageUpdateTest {
         description = "update object not found description",
         paymentType = CatalogPaymentType.FREE,
         lock = initObjects.first().lock,
+        readSpeed = SpeedType._100,
+        writeSpeed = SpeedType._100,
     )
     private val reqUpdateConc by lazy {
         Storage(
@@ -46,6 +51,8 @@ abstract class RepoStorageUpdateTest {
             description = "update object not found description",
             paymentType = CatalogPaymentType.FREE,
             lock = lockBad,
+            readSpeed = SpeedType._100,
+            writeSpeed = SpeedType._100,
         )
     }
 
@@ -81,8 +88,8 @@ abstract class RepoStorageUpdateTest {
 
     companion object : BaseInitStorages("update") {
         override val initObjects: List<Storage> = listOf(
-            createInitTestModel("update"),
-            createInitTestModel("updateConc"),
+            createInitTestModel("update").apply { paymentType = CatalogPaymentType.FREE },
+            createInitTestModel("updateConc").apply { paymentType = CatalogPaymentType.FREE },
         )
     }
 }

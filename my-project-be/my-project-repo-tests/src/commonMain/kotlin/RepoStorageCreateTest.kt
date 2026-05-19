@@ -2,6 +2,7 @@ package ru.otus.otuskotlin.lrvch.backend.repo.tests
 
 import IRepoStorageInitializable
 import ru.otus.otuskotlin.lrvch.common.models.CatalogPaymentType
+import ru.otus.otuskotlin.lrvch.common.models.SpeedType
 import ru.otus.otuskotlin.lrvch.common.models.Storage
 import ru.otus.otuskotlin.lrvch.common.models.StorageId
 import ru.otus.otuskotlin.lrvch.common.repo.DbStorageRequest
@@ -19,7 +20,9 @@ abstract class RepoStorageCreateTest {
         title = "create object",
         description = "create object description",
         paymentType = CatalogPaymentType.FREE,
-        availability = "create availability"
+        availability = "create availability",
+        readSpeed = SpeedType._100,
+        writeSpeed = SpeedType._100,
     )
 
     @Test

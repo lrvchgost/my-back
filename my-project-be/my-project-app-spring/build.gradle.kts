@@ -13,6 +13,7 @@ dependencies {
     implementation(libs.jackson.kotlin)
     implementation(kotlin("reflect"))
     implementation(kotlin("stdlib"))
+    implementation(projects.myProjectRepoPgjvm)
 
     implementation(libs.coroutines.core)
     implementation(libs.coroutines.reactor)
@@ -66,4 +67,17 @@ tasks {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+    environment("CATALOG_STORAGES_DB", "test_db")
+}
+
+tasks.bootBuildImage {
+    builder = "paketobuildpacks/builder-jammy-base:latest"
+    environment.set(mapOf("BP_HEALTH_CHECKER_ENABLED" to "true"))
+    buildpacks.set(
+        listOf(
+            "docker.io/paketobuildpacks/adoptium",
+            "urn:cnb:builder:paketo-buildpacks/java",
+            "docker.io/paketobuildpacks/health-checker:latest"
+        )
+    )
 }

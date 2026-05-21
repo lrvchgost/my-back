@@ -19,7 +19,7 @@ abstract class ScenarioOptimizeV2(
     private val debug: StorageDebug? = null
 ) {
     @Test
-    fun search() = runBlocking {
+    fun optimize() = runBlocking {
         val objs = listOf(
             someCreateStorage,
             someCreateStorage.copy(title = "Some storage 2"),

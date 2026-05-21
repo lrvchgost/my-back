@@ -70,7 +70,7 @@ abstract class ScenarioUpdateV1(
             "storage/delete", StorageDeleteRequest(
                 requestType = "delete",
                 debug = debug,
-                storage = StorageDeleteObject(cObj.id, cObj.lock),
+                storage = StorageDeleteObject(ruObj.id, ruObj.lock),
             )
         ) as StorageDeleteResponse
 

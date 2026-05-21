@@ -43,7 +43,7 @@ class CatalogConfig(val postgresConfig: CatalogConfigPostgres) {
     ): CatalogCoreSettings = CatalogCoreSettings(
         loggerProvider = loggerProvider,
         repoTest = testRepo,
-        repoProd = testRepo,
+        repoProd = prodRepo,
     )
 
     @Bean

@@ -7,7 +7,7 @@ jvm-compiler = "21"
 jvm-language = "21"
 
 kotlinx-datetime = "0.6.2"
-kotlinx-serialization = "1.8.1"
+kotlinx-serialization = "1.9.0"
 coroutines = "1.9.0"
 
 binaryCompabilityValidator = "0.13.2"
@@ -84,6 +84,7 @@ spring-webflux-ui = { module = "org.springdoc:springdoc-openapi-starter-webflux-
 spring-test = { module = "org.springframework.boot:spring-boot-starter-test" }
 spring-webflux-test = { module = "org.springframework.boot:spring-boot-webflux-test" }
 spring-mockk = "com.ninja-squad:springmockk:5.0.1"
+spring-kotlin-serialization = { module = "org.springframework.boot:spring-boot-starter-kotlinx-serialization-json"}
 
 # Message Queues
 kafka-client = { module = "org.apache.kafka:kafka-clients", version = "3.7.0" }

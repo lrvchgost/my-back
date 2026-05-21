@@ -39,3 +39,15 @@ psql:
   port: "${CATALOG_STORAGES_DB_PORT:5433}"
   user: "${CATALOG_STORAGES_DB_USER:postgres}"
   password: "${CATALOG_STORAGES_DB_PASS:catalog-of-storages-pass}"
+
+logging:
+  level:
+    org:
+      springframework:
+        http:
+          codec: DEBUG
+        web: DEBUG
+        reactive:
+          result:
+            method:
+              annotation: DEBUG

@@ -18,8 +18,8 @@ abstract class ScenarioSearchV1(
     fun search() = runBlocking {
         val objs = listOf(
             someCreateStorage,
-            someCreateStorage.copy(title = "Storage 2"),
-            someCreateStorage.copy(title = "Storage 3"),
+            someCreateStorage.copy(title = "storage 2"),
+            someCreateStorage.copy(title = "storage 3"),
         ).map { obj ->
             val resCreate = client.sendAndReceive(
                 "storage/create", StorageCreateRequest(
@@ -42,7 +42,7 @@ abstract class ScenarioSearchV1(
             cObj
         }
 
-        val sObj = StorageSearchFilter(searchString = "public")
+        val sObj = StorageSearchFilter(searchString = "storage")
         val resSearch = client.sendAndReceive(
             "storage/search",
             StorageSearchRequest(
@@ -57,8 +57,8 @@ abstract class ScenarioSearchV1(
         val rsObj: List<StorageResponseObject> = resSearch.storages ?: fail("No storages in Search response")
         val titles = rsObj.map { it.title }
         println(titles)
-        assertContains(titles, "public")
-        assertContains(titles, "public")
+        assertContains(titles, "storage 2")
+        assertContains(titles, "storage 3")
 
         objs.forEach { obj ->
             val resDelete = client.sendAndReceive(

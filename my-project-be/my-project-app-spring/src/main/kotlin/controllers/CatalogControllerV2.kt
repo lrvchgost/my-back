@@ -35,25 +35,37 @@ class CatalogControllerV2(
     @PostMapping("create")
     suspend fun create(@RequestBody request: StorageCreateRequest): StorageCreateResponse =
         process(appSettings, request = request, this::class, "create")
+    suspend fun create(@RequestBody request: IRequest): IResponse =
+        process(appSettings, request = request, this::class, "create")
 
     @PostMapping("read")
-    suspend fun  read(@RequestBody request: StorageReadRequest): StorageReadResponse =
+    suspend fun read(@RequestBody request: StorageReadRequest): StorageReadResponse =
+        process(appSettings, request = request, this::class, "read")
+    suspend fun read(@RequestBody request: IRequest): IResponse =
         process(appSettings, request = request, this::class, "read")
 
-    @RequestMapping("update", method = [RequestMethod.POST])
-    suspend fun  update(@RequestBody request: StorageUpdateRequest): StorageUpdateResponse =
+    @PostMapping("update")
+    suspend fun update(@RequestBody request: StorageUpdateRequest): StorageUpdateResponse =
+        process(appSettings, request = request, this::class, "update")
+    suspend fun update(@RequestBody request: IRequest): IResponse =
         process(appSettings, request = request, this::class, "update")
 
     @PostMapping("delete")
-    suspend fun  delete(@RequestBody request: StorageDeleteRequest): StorageDeleteResponse =
+    suspend fun delete(@RequestBody request: StorageDeleteRequest): StorageDeleteResponse =
+        process(appSettings, request = request, this::class, "delete")
+    suspend fun delete(@RequestBody request: IRequest): IResponse =
         process(appSettings, request = request, this::class, "delete")
 
     @PostMapping("search")
-    suspend fun  search(@RequestBody request: StorageSearchRequest): StorageSearchResponse =
+    suspend fun search(@RequestBody request: StorageSearchRequest): StorageSearchResponse =
+        process(appSettings, request = request, this::class, "search")
+    suspend fun search(@RequestBody request: IRequest): IResponse =
         process(appSettings, request = request, this::class, "search")
 
     @PostMapping("optimize")
-    suspend fun  offers(@RequestBody request: OptimizeStoragesRequest): OptimizeStoragesResponse =
+    suspend fun offers(@RequestBody request: OptimizeStoragesRequest): OptimizeStoragesResponse =
+        process(appSettings, request = request, this::class, "optimize")
+    suspend fun offers(@RequestBody request: IRequest): IResponse =
         process(appSettings, request = request, this::class, "optimize")
 
     companion object {

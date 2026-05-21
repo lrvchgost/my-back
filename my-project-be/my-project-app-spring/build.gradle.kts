@@ -20,6 +20,7 @@ dependencies {
     implementation(libs.coroutines.reactive)
     implementation(libs.kotlinx.serialization.core)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.spring.kotlin.serialization)
 
     // Внутренние модели
     implementation(project(":my-project-common"))

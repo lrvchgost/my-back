@@ -3,6 +3,7 @@ import ru.otus.otuskotlin.lrvch.backend.repo.tests.StorageRepositoryMock
 import ru.otus.otuskotlin.lrvch.common.models.Storage
 import ru.otus.otuskotlin.lrvch.common.repo.DbStorageFilterRequest
 import ru.otus.otuskotlin.lrvch.common.repo.DbStorageIdRequest
+import ru.otus.otuskotlin.lrvch.common.repo.DbStorageIdsRequest
 import ru.otus.otuskotlin.lrvch.common.repo.DbStorageRequest
 import ru.otus.otuskotlin.lrvch.common.repo.DbStorageResponseOk
 import ru.otus.otuskotlin.lrvch.common.repo.DbStoragesResponseOk
@@ -18,6 +19,7 @@ class StorageRepoMockTest {
         invokeUpdateStorage = { DbStorageResponseOk(CatalogStorageStub.prepareResult { title = "update" }) },
         invokeDeleteStorage = { DbStorageResponseOk(CatalogStorageStub.prepareResult { title = "delete" }) },
         invokeSearchStorage = { DbStoragesResponseOk(listOf(CatalogStorageStub.prepareResult { title = "search" })) },
+        invokeSearchStoragesByIds = { DbStoragesResponseOk(listOf(CatalogStorageStub.prepareResult { title = "searchByIds" })) },
     )
 
     @Test
@@ -53,5 +55,12 @@ class StorageRepoMockTest {
         val result = repo.searchStorage(DbStorageFilterRequest())
         assertIs<DbStoragesResponseOk>(result)
         assertEquals("search", result.data.first().title)
+    }
+
+    @Test
+    fun searchStoragesByIds() = runTest {
+        val result = repo.searchStoragesByIds(DbStorageIdsRequest( storages = listOf()))
+        assertIs<DbStoragesResponseOk>(result)
+        assertEquals("searchByIds", result.data.first().title)
     }
 }

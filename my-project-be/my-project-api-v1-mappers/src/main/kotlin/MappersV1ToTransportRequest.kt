@@ -11,7 +11,7 @@ import ru.otus.otuskotlin.lrvch.common.models.StorageFilter
 import ru.otus.otuskotlin.lrvch.common.models.StorageLock
 
 fun Storage.toTransportCreateStorage() = StorageCreateObject(
-    title = title.takeIf { it.isNotBlank()  },
+    title = title.takeIf { it.isNotBlank() },
     description = description.takeIf { it.isNotBlank() },
     paymentType = paymentType.toTransport(),
     readSpeed = readSpeed.toTransport(),
@@ -44,7 +44,15 @@ fun Storage.toTransportUpdateStorage() = StorageUpdateObject(
 )
 
 fun Storage.toTransportOptimizeStorage() = StorageOptimizeObject(
-    id = id.toTransport()
+    id = id.toTransport(),
+    title = title.takeIf { it.isNotBlank() },
+    description = description.takeIf { it.isNotBlank() },
+    paymentType = paymentType.toTransport(),
+    readSpeed = readSpeed.toTransport(),
+    writeSpeed = writeSpeed.toTransport(),
+    capacity = capacity.takeIf { it.isNotBlank() },
+    availability = availability.takeIf { it.isNotBlank() },
+    lock = lock.toTransport()
 )
 
 fun List<Storage>.toTransportOptimizeStorage(): List<StorageOptimizeObject>? =

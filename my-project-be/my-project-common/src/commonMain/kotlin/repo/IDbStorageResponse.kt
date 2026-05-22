@@ -4,16 +4,16 @@ import ru.otus.otuskotlin.lrvch.common.models.CatalogError
 import ru.otus.otuskotlin.lrvch.common.models.Storage
 
 
-sealed interface IDbStorageResponse: IDbResponse<Storage>
+sealed interface IDbStorageResponse : IDbResponse<Storage>
 
 data class DbStorageResponseOk(
     val data: Storage,
-): IDbStorageResponse
+) : IDbStorageResponse
 
 data class DbStorageResponseErr(
     val errors: List<CatalogError> = emptyList()
-): IDbStorageResponse {
-    constructor(err: CatalogError): this(listOf(err))
+) : IDbStorageResponse {
+    constructor(err: CatalogError) : this(listOf(err))
 }
 
 data class DbStorageResponseErrWithData(

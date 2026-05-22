@@ -19,6 +19,6 @@ abstract class ScenariosV1(
     internal inner class ReadV1: ScenarioReadV1(client, debug)
     @Nested
     internal inner class SearchV1: ScenarioSearchV1(client, debug)
-//    @Nested
-//    internal inner class OptimizeV1: ScenarioOptimizeV1(client, debug)
+    @Nested
+    internal inner class OptimizeV1: ScenarioOptimizeV1(client, debug)
 }

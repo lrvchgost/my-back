@@ -383,10 +383,13 @@ components:
 
     StorageOptimizeObject:
       allOf:
+        - $ref: '#/components/schemas/BaseStorage'
         - type: object
           properties:
             id:
               $ref: '#/components/schemas/StorageId'
+            lock:
+              $ref: '#/components/schemas/StorageLock'
 
     OptimizeStoragesRequest:
       allOf:

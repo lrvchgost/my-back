@@ -3,6 +3,7 @@ package ru.otus.otuskotlin.lrvch.backend.repo.tests
 import ru.otus.otuskotlin.lrvch.common.models.Storage
 import ru.otus.otuskotlin.lrvch.common.repo.DbStorageFilterRequest
 import ru.otus.otuskotlin.lrvch.common.repo.DbStorageIdRequest
+import ru.otus.otuskotlin.lrvch.common.repo.DbStorageIdsRequest
 import ru.otus.otuskotlin.lrvch.common.repo.DbStorageRequest
 import ru.otus.otuskotlin.lrvch.common.repo.DbStorageResponseOk
 import ru.otus.otuskotlin.lrvch.common.repo.DbStoragesResponseErr
@@ -16,6 +17,7 @@ class StorageRepositoryMock(
     private val invokeUpdateStorage: (DbStorageRequest) -> IDbStorageResponse = { DEFAULT_STORAGE_SUCCESS_EMPTY_MOCK },
     private val invokeDeleteStorage: (DbStorageIdRequest) -> IDbStorageResponse = { DEFAULT_STORAGE_SUCCESS_EMPTY_MOCK },
     private val invokeSearchStorage: (DbStorageFilterRequest) -> IDbStoragesResponse = { DEFAULT_STORAGES_SUCCESS_EMPTY_MOCK },
+    private val invokeSearchStoragesByIds: (DbStorageIdsRequest) -> IDbStoragesResponse = { DEFAULT_STORAGES_SUCCESS_EMPTY_MOCK },
 ): IRepoStorage {
     override suspend fun createStorage(rq: DbStorageRequest): IDbStorageResponse {
         return invokeCreateStorage(rq)
@@ -35,6 +37,10 @@ class StorageRepositoryMock(
 
     override suspend fun searchStorage(rq: DbStorageFilterRequest): IDbStoragesResponse {
         return invokeSearchStorage(rq)
+    }
+
+    override suspend fun searchStoragesByIds(rq: DbStorageIdsRequest): IDbStoragesResponse {
+        return invokeSearchStoragesByIds(rq)
     }
 
     companion object {

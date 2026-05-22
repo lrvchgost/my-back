@@ -50,6 +50,22 @@ object CatalogStorageStub {
         EMPTY.copy(id = StorageId("5"))
     )
 
+    fun prepareOptimizeListNotEmpty() = mutableListOf(
+        BASE.copy(id = StorageId("1-not-empty")).apply { paymentType = CatalogPaymentType.PREPAID },
+        BASE.copy(id = StorageId("2-not-empty")).apply { paymentType = CatalogPaymentType.PREPAID },
+        BASE.copy(id = StorageId("3-not-empty")).apply { paymentType = CatalogPaymentType.PREPAID },
+        BASE.copy(id = StorageId("4-not-empty")).apply { paymentType = CatalogPaymentType.PREPAID },
+        BASE.copy(id = StorageId("5-not-empty")).apply { paymentType = CatalogPaymentType.PREPAID }
+    )
+
+    fun optimizedStorage() =
+       BASE.copy(id = StorageId("1")).apply {
+           paymentType = CatalogPaymentType.PREPAID
+           capacity = "500"
+           title = "Change it"
+           description = "Change it"
+       }
+
     fun makeSearchableStorage(id: String, base: Storage, filter: StorageFilter) = base.copy(
         id = StorageId(id),
         title = "$id ${filter.searchString}",

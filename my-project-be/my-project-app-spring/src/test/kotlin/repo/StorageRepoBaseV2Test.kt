@@ -4,11 +4,9 @@ import org.assertj.core.api.Assertions.assertThat
 import org.springframework.http.MediaType
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBody
-import org.springframework.web.reactive.function.BodyInserters
-import ru.otus.otuskotlin.lrvch.api.v2.apiV2EncodeToJsonElement
-import ru.otus.otuskotlin.lrvch.api.v2.apiV2Mapper
+import ru.otus.otuskotlin.lrvch.api.v2.mappers.toTransportOptimize
+import ru.otus.otuskotlin.lrvch.api.v2.mappers.toTransportOptimizeStorage
 import ru.otus.otuskotlin.lrvch.api.v2.apiV2RequestSerialize
-import ru.otus.otuskotlin.lrvch.api.v2.apiV2ResponseSerialize
 import ru.otus.otuskotlin.lrvch.api.v2.mappers.toTransportCreate
 import ru.otus.otuskotlin.lrvch.api.v2.mappers.toTransportCreateStorage
 import ru.otus.otuskotlin.lrvch.api.v2.mappers.toTransportDelete
@@ -20,6 +18,7 @@ import ru.otus.otuskotlin.lrvch.api.v2.mappers.toTransportUpdate
 import ru.otus.otuskotlin.lrvch.api.v2.mappers.toTransportUpdateStorage
 import ru.otus.otuskotlin.lrvch.api.v2.models.IRequest
 import ru.otus.otuskotlin.lrvch.api.v2.models.IResponse
+import ru.otus.otuskotlin.lrvch.api.v2.models.OptimizeStoragesRequest
 import ru.otus.otuskotlin.lrvch.api.v2.models.PaymentType
 import ru.otus.otuskotlin.lrvch.api.v2.models.StorageCreateRequest
 import ru.otus.otuskotlin.lrvch.api.v2.models.StorageDebug
@@ -109,19 +108,19 @@ internal abstract class StorageRepoBaseV2Test {
             .toTransportSearch()
     )
 
-//    @Test
-//    open fun optimize() = testRepoStorage(
-//        "optimize",
-//        OptimizeStoragesRequest(
-//            storages = CatalogStorageStub.prepareOptimizeList().toTransportOptimizeStorage(),
-//            debug = debug,
-//        ),
-//        prepareCtx(CatalogContext(
-//            state = CatalogState.RUNNING,
-//            storageResponse = CatalogStorageStub.prepareResult { permissionsClient.clear() },
-//        )
-//            .toTransportOffers().copy(responseType = "offers")
-//    )
+    @Test
+    open fun optimizeStorages() = testRepoStorage(
+        "optimize",
+        OptimizeStoragesRequest(
+            storages = CatalogStorageStub.prepareOptimizeListNotEmpty().toTransportOptimizeStorage(),
+            debug = debug,
+        ),
+        prepareCtx(CatalogStorageStub.optimizedStorage().apply {
+            id = StorageId(uuidNew)
+            lock = StorageLock(uuidNew)
+        })
+            .toTransportOptimize()
+    )
 
     private fun prepareCtx(storage: Storage) = CatalogContext(
         state = CatalogState.RUNNING,

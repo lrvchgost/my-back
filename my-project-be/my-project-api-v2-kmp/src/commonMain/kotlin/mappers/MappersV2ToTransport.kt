@@ -90,6 +90,7 @@ fun Storage.toTransport() = StorageResponseObject(
     readSpeed = readSpeed.toTransport(),
     writeSpeed = readSpeed.toTransport(),
     lock = lock.takeIf { it != StorageLock.NONE }?.asString(),
+    enableOptimize = optimizeEnabled.toStorageOptimizeEnabled(),
     permissions = permissionsClient.toTransport(),
 )
 
@@ -153,3 +154,9 @@ private fun List<CatalogError>.toTransportErrors(): List<Error>? = this
     .map { it.toTransport() }
     .toList()
     .takeIf { it.isNotEmpty() }
+
+private fun Boolean?.toStorageOptimizeEnabled() = when (this) {
+    true -> "1"
+    false -> "0"
+    null -> "0"
+}

@@ -1,7 +1,6 @@
 package ru.otus.otuskotlin.lrvch.backend.repo.tests
 
 import ru.otus.otuskotlin.lrvch.common.models.CatalogPaymentType
-import ru.otus.otuskotlin.lrvch.common.models.SpeedType
 import ru.otus.otuskotlin.lrvch.common.models.Storage
 import ru.otus.otuskotlin.lrvch.common.repo.DbStorageFilterRequest
 import ru.otus.otuskotlin.lrvch.common.repo.DbStoragesResponseOk

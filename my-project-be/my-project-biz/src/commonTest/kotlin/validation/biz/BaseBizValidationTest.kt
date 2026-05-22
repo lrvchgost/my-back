@@ -10,9 +10,7 @@ import ru.otus.otuskotlin.lrvch.stubs.CatalogStorageStub
 abstract class BaseBizValidationTest {
     private val repo = RepoStorageInitialized(
         repo = StorageRepoInMemory(),
-        initObjects = listOf(
-            CatalogStorageStub.get(),
-        ),
+        initObjects = listOf(CatalogStorageStub.get()) + CatalogStorageStub.prepareOptimizeListNotEmpty(),
     )
     protected abstract val command: CatalogCommand
     private val settings by lazy { CatalogCoreSettings(repoTest = repo) }

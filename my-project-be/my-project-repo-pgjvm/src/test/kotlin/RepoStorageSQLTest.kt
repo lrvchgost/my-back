@@ -12,6 +12,7 @@ import org.testcontainers.containers.wait.strategy.Wait
 import ru.otus.otuskotlin.lrvch.backend.repo.tests.RepoStorageCreateTest
 import ru.otus.otuskotlin.lrvch.backend.repo.tests.RepoStorageDeleteTest
 import ru.otus.otuskotlin.lrvch.backend.repo.tests.RepoStorageReadTest
+import ru.otus.otuskotlin.lrvch.backend.repo.tests.RepoStorageSearchByIdsTest
 import ru.otus.otuskotlin.lrvch.backend.repo.tests.RepoStorageSearchTest
 import ru.otus.otuskotlin.lrvch.backend.repo.tests.RepoStorageUpdateTest
 import ru.otus.otuskotlin.lrvch.common.models.Storage
@@ -64,6 +65,13 @@ class RepoStorageSQLTest {
     }
 
     class RepoStorageSQLSearchTest : RepoStorageSearchTest() {
+        override val repo = repoUnderTestContainer(initObjects)
+
+        @AfterTest
+        fun tearDown() = repo.clear()
+    }
+
+    class RepoStorageSQLSearchByIdsTest : RepoStorageSearchByIdsTest() {
         override val repo = repoUnderTestContainer(initObjects)
 
         @AfterTest

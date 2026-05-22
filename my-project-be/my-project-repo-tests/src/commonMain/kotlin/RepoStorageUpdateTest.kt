@@ -9,8 +9,6 @@ import ru.otus.otuskotlin.lrvch.common.repo.DbStorageRequest
 import ru.otus.otuskotlin.lrvch.common.repo.DbStorageResponseErr
 import ru.otus.otuskotlin.lrvch.common.repo.DbStorageResponseErrWithData
 import ru.otus.otuskotlin.lrvch.common.repo.DbStorageResponseOk
-import ru.otus.otuskotlin.lrvch.common.repo.DbStoragesResponseErr
-import ru.otus.otuskotlin.lrvch.common.repo.DbStoragesResponseOk
 import ru.otus.otuskotlin.lrvch.common.repo.IRepoStorage
 import kotlin.test.Test
 import kotlin.test.assertEquals

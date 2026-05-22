@@ -9,6 +9,7 @@ import ru.otus.otuskotlin.lrvch.common.models.StorageId
 import ru.otus.otuskotlin.lrvch.common.models.StorageLock
 import ru.otus.otuskotlin.lrvch.common.repo.DbStorageFilterRequest
 import ru.otus.otuskotlin.lrvch.common.repo.DbStorageIdRequest
+import ru.otus.otuskotlin.lrvch.common.repo.DbStorageIdsRequest
 import ru.otus.otuskotlin.lrvch.common.repo.DbStorageRequest
 import ru.otus.otuskotlin.lrvch.common.repo.DbStorageResponseOk
 import ru.otus.otuskotlin.lrvch.common.repo.DbStoragesResponseOk
@@ -20,6 +21,7 @@ import ru.otus.otuskotlin.lrvch.common.repo.errorDb
 import ru.otus.otuskotlin.lrvch.common.repo.errorEmptyId
 import ru.otus.otuskotlin.lrvch.common.repo.errorEmptyLock
 import ru.otus.otuskotlin.lrvch.common.repo.errorNotFound
+import ru.otus.otuskotlin.lrvch.common.repo.errorNotFoundByIds
 import ru.otus.otuskotlin.lrvch.common.repo.errorRepoConcurrency
 import ru.otus.otuskotlin.lrvch.common.repo.exeptions.RepoEmptyLockException
 import kotlin.time.Duration
@@ -107,7 +109,6 @@ class StorageRepoInMemory(
      * Если в фильтре не установлен какой-либо из параметров - по нему фильтрация не идет
      */
     override suspend fun searchStorage(rq: DbStorageFilterRequest): IDbStoragesResponse = tryStoragesMethod {
-        val r = cache.asMap().values;
         val result: List<Storage> = cache.asMap().asSequence()
             .filter { entry ->
                 rq.searchString.takeIf { it.isNotBlank() }?.let {
@@ -141,6 +142,23 @@ class StorageRepoInMemory(
             }
             .map { it.value.toInternal() }
             .toList()
+        DbStoragesResponseOk(result)
+    }
+
+    override suspend fun searchStoragesByIds(rq: DbStorageIdsRequest): IDbStoragesResponse = tryStoragesMethod {
+        val ids = rq.storages.map { it.id.asString() }
+        val result: List<Storage> = cache.asMap().asSequence()
+            .filter { entry ->
+                ids.takeIf { it.isNotEmpty() }?.let {
+                    ids.contains(entry.value.id)
+                } ?: true
+            }
+            .map { it.value.toInternal() }
+            .toList()
+
+        if (result.isEmpty())
+            return@tryStoragesMethod errorNotFoundByIds(rq.storages.map { it.id })
+
         DbStoragesResponseOk(result)
     }
 }

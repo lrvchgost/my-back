@@ -8,12 +8,15 @@ import ru.otus.otuskotlin.lrvch.api.v1.mappers.toTransportCreate
 import ru.otus.otuskotlin.lrvch.api.v1.mappers.toTransportCreateStorage
 import ru.otus.otuskotlin.lrvch.api.v1.mappers.toTransportDelete
 import ru.otus.otuskotlin.lrvch.api.v1.mappers.toTransportDeleteStorage
+import ru.otus.otuskotlin.lrvch.api.v1.mappers.toTransportOptimize
+import ru.otus.otuskotlin.lrvch.api.v1.mappers.toTransportOptimizeStorage
 import ru.otus.otuskotlin.lrvch.api.v1.mappers.toTransportRead
 import ru.otus.otuskotlin.lrvch.api.v1.mappers.toTransportReadStorage
 import ru.otus.otuskotlin.lrvch.api.v1.mappers.toTransportSearch
 import ru.otus.otuskotlin.lrvch.api.v1.mappers.toTransportUpdate
 import ru.otus.otuskotlin.lrvch.api.v1.mappers.toTransportUpdateStorage
 import ru.otus.otuskotlin.lrvch.api.v1.models.IResponse
+import ru.otus.otuskotlin.lrvch.api.v1.models.OptimizeStoragesRequest
 import ru.otus.otuskotlin.lrvch.api.v1.models.PaymentType
 import ru.otus.otuskotlin.lrvch.api.v1.models.StorageCreateRequest
 import ru.otus.otuskotlin.lrvch.api.v1.models.StorageDebug
@@ -106,19 +109,20 @@ internal abstract class StorageRepoBaseV1Test {
             .toTransportSearch().copy(responseType = "search")
     )
 
-//    @Test
-//    open fun optimize() = testRepoStorage(
-//        "optimize",
-//        OptimizeStoragesRequest(
-//            storages = CatalogStorageStub.prepareOptimizeList().toTransportOptimizeStorage(),
-//            debug = debug,
-//        ),
-//        prepareCtx(CatalogContext(
-//            state = CatalogState.RUNNING,
-//            storageResponse = CatalogStorageStub.prepareResult { permissionsClient.clear() },
-//        )
-//            .toTransportOffers().copy(responseType = "offers")
-//    )
+    @Test
+    open fun optimizeStorages() = testRepoStorage(
+        "optimize",
+        OptimizeStoragesRequest(
+            storages = CatalogStorageStub.prepareOptimizeListNotEmpty().toTransportOptimizeStorage(),
+            debug = debug,
+        ),
+        prepareCtx(CatalogStorageStub.optimizedStorage().apply {
+            id = StorageId(uuidNew)
+            lock = StorageLock(uuidNew)
+        })
+            .toTransportOptimize()
+            .copy(responseType = "optimize")
+    )
 
     private fun prepareCtx(storage: Storage) = CatalogContext(
         state = CatalogState.RUNNING,

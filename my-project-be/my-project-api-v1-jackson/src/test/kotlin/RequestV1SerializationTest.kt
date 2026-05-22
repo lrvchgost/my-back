@@ -213,7 +213,12 @@ class RequestV1SerializationTest {
                 mode = StorageRequestDebugMode.STUB, stub = StorageRequestDebugStubs.BAD_TITLE
             ),
             storages = listOf(StorageOptimizeObject(
-                id = "id"
+                id = "id",
+                title = "storage title",
+                description = "storage description",
+                paymentType = PaymentType.FREE,
+                readSpeed = SpeedType._100,
+                writeSpeed = SpeedType._100
             ))
         )
 
@@ -221,7 +226,11 @@ class RequestV1SerializationTest {
         fun serialize() {
             val json = apiV1Mapper.writeValueAsString(request)
 
-            assertContains(json, "\"storages\":[{\"id\":\"id\"}]")
+//            assertContains(json, "\"storages\":[{\"id\":\"id\"}]")
+            assertContains(json, Regex("\"title\":\\s*\"storage title\""))
+            assertContains(json, Regex("\"mode\":\\s*\"stub\""))
+            assertContains(json, Regex("\"stub\":\\s*\"badTitle\""))
+            assertContains(json, Regex("\"requestType\":\\s*\"optimize\""))
         }
 
         @Test

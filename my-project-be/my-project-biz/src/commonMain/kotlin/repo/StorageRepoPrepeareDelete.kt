@@ -13,5 +13,6 @@ fun ICorChainDsl<CatalogContext>.repoPrepareDelete(title: String) = worker {
     on { state == CatalogState.RUNNING }
     handle {
         storageRepoPrepare = storageValidated.deepCopy()
+        storagesRepoPrepare = storagesValidated.map { it.deepCopy() }.toMutableList()
     }
 }

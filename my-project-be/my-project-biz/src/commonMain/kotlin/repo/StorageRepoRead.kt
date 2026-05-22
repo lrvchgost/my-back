@@ -12,7 +12,7 @@ import ru.otus.otuskotlin.lrvch.libs.cor.worker
 
 fun ICorChainDsl<CatalogContext>.repoRead(title: String) = worker {
     this.title = title
-    description = "Чтение объявления из БД"
+    description = "Чтение стораджа из БД"
     on { state == CatalogState.RUNNING }
     handle {
         val request = DbStorageIdRequest(storageValidated)

@@ -15,6 +15,7 @@ import ru.otus.otuskotlin.lrvch.common.models.StorageId
 import ru.otus.otuskotlin.lrvch.common.models.StorageLock
 import ru.otus.otuskotlin.lrvch.common.repo.DbStorageFilterRequest
 import ru.otus.otuskotlin.lrvch.common.repo.DbStorageIdRequest
+import ru.otus.otuskotlin.lrvch.common.repo.DbStorageIdsRequest
 import ru.otus.otuskotlin.lrvch.common.repo.DbStorageRequest
 import ru.otus.otuskotlin.lrvch.common.repo.DbStorageResponseErr
 import ru.otus.otuskotlin.lrvch.common.repo.DbStorageResponseOk
@@ -25,6 +26,7 @@ import ru.otus.otuskotlin.lrvch.common.repo.IDbStoragesResponse
 import ru.otus.otuskotlin.lrvch.common.repo.IRepoStorage
 import ru.otus.otuskotlin.lrvch.common.repo.errorEmptyId
 import ru.otus.otuskotlin.lrvch.common.repo.errorNotFound
+import ru.otus.otuskotlin.lrvch.common.repo.errorNotFoundByIds
 import ru.otus.otuskotlin.lrvch.common.repo.errorRepoConcurrency
 
 class RepoStorageSql(
@@ -57,7 +59,10 @@ class RepoStorageSql(
         res?.first() ?: throw RuntimeException("BD error: insert statement returned empty result")
     }
 
-    private suspend inline fun <T> transactionWrapper(crossinline block: () -> T, crossinline handle: (Exception) -> T): T =
+    private suspend inline fun <T> transactionWrapper(
+        crossinline block: () -> T,
+        crossinline handle: (Exception) -> T
+    ): T =
         withContext(Dispatchers.IO) {
             try {
                 transaction(conn) {
@@ -106,13 +111,14 @@ class RepoStorageSql(
         }
 
 
-    override suspend fun updateStorage(rq: DbStorageRequest): IDbStorageResponse = update(rq.storage.id, rq.storage.lock) {
-        storageTable.updateReturning(where = { storageTable.id eq rq.storage.id.asString() }) {
-            it.to(rq.storage.copy(lock = StorageLock(randomUuid())), randomUuid)
-        }.singleOrNull()
-            ?.let { DbStorageResponseOk(storageTable.from(it)) }
-            ?: errorNotFound(rq.storage.id)
-    }
+    override suspend fun updateStorage(rq: DbStorageRequest): IDbStorageResponse =
+        update(rq.storage.id, rq.storage.lock) {
+            storageTable.updateReturning(where = { storageTable.id eq rq.storage.id.asString() }) {
+                it.to(rq.storage.copy(lock = StorageLock(randomUuid())), randomUuid)
+            }.singleOrNull()
+                ?.let { DbStorageResponseOk(storageTable.from(it)) }
+                ?: errorNotFound(rq.storage.id)
+        }
 
     override suspend fun deleteStorage(rq: DbStorageIdRequest): IDbStorageResponse = update(rq.id, rq.lock) {
         storageTable.deleteWhere { id eq rq.id.asString() }
@@ -152,6 +158,21 @@ class RepoStorageSql(
                     }
                 }.reduce { a, b -> a and b }
             }
+
+            DbStoragesResponseOk(data = res.map { storageTable.from(it) })
+        }, {
+            DbStoragesResponseErr(it.asCatalogError())
+        })
+
+    override suspend fun searchStoragesByIds(rq: DbStorageIdsRequest): IDbStoragesResponse =
+        transactionWrapper({
+            val res = storageTable.selectAll().where {
+//                println("${storageTable.id inList rq.storages.map { it.id.asString() }}")
+                storageTable.id inList rq.storages.map { it.id.asString() }
+            }
+            val data = res.map { storageTable.from(it) }
+
+            if (data.isEmpty())  return@transactionWrapper errorNotFoundByIds(rq.storages.map { it.id})
 
             DbStoragesResponseOk(data = res.map { storageTable.from(it) })
         }, {

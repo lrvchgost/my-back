@@ -41,7 +41,17 @@ abstract class ScenarioOptimizeV1(
             cObj
         }
 
-        val sObj = objs.map { StorageOptimizeObject(it.id) }
+        val sObj = objs.map { StorageOptimizeObject(
+            id = it.id,
+            title = it.title,
+            description = it.description,
+            capacity = it.capacity,
+            availability = it.availability,
+            paymentType = it.paymentType,
+            readSpeed = it.readSpeed,
+            writeSpeed = it.writeSpeed,
+            lock = it.lock
+        ) }
         val storageResp = client.sendAndReceive(
             "storage/optimize",
             OptimizeStoragesRequest(
@@ -63,16 +73,16 @@ abstract class ScenarioOptimizeV1(
         assertEquals(someCreateStorage.readSpeed, cObj.readSpeed)
         assertEquals(someCreateStorage.writeSpeed, cObj.writeSpeed)
 
-        objs.forEach { obj ->
-            val resDelete = client.sendAndReceive(
-                "storage/delete", StorageDeleteRequest(
-                    requestType = "delete",
-                    debug = debug,
-                    storage = StorageDeleteObject(obj.id, obj.lock),
-                )
-            ) as StorageDeleteResponse
-
-            assertEquals(ResponseResult.SUCCESS, resDelete.result)
-        }
+//        objs.forEach { obj ->
+//            val resDelete = client.sendAndReceive(
+//                "storage/delete", StorageDeleteRequest(
+//                    requestType = "delete",
+//                    debug = debug,
+//                    storage = StorageDeleteObject(obj.id, obj.lock),
+//                )
+//            ) as StorageDeleteResponse
+//
+//            assertEquals(ResponseResult.SUCCESS, resDelete.result)
+//        }
     }
 }

@@ -11,6 +11,8 @@ import ru.otus.otuskotlin.lrvch.common.models.CatalogWorkMode
 import ru.otus.otuskotlin.lrvch.common.models.SpeedType
 import ru.otus.otuskotlin.lrvch.common.models.Storage
 import ru.otus.otuskotlin.lrvch.common.models.StorageId
+import ru.otus.otuskotlin.lrvch.common.models.StorageLock
+import ru.otus.otuskotlin.lrvch.stubs.CatalogStorageStub
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
@@ -19,29 +21,12 @@ fun validationOptimizeCorrect(command: CatalogCommand, processor: CatalogProcess
         command = command,
         state = CatalogState.NONE,
         workMode = CatalogWorkMode.TEST,
-        storagesRequest = mutableListOf(
-            Storage(
-                id = StorageId("1"),
-                title = "abc",
-                description = "abc",
-                paymentType = CatalogPaymentType.FREE,
-                writeSpeed = SpeedType._100,
-                readSpeed = SpeedType._100,
-            ),
-            Storage(
-                id = StorageId("1"),
-                title = "abc",
-                description = "abc",
-                paymentType = CatalogPaymentType.FREE,
-                writeSpeed = SpeedType._100,
-                readSpeed = SpeedType._100,
-            ),
-        ),
+        storagesRequest = CatalogStorageStub.prepareOptimizeListNotEmpty(),
     )
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)
     assertNotEquals(CatalogState.FAILED, ctx.state)
-    assertEquals(2, ctx.storagesValidated.size)
+    assertEquals(5, ctx.storagesValidated.size)
 }
 
 fun validationOptimizePaymentIncompatible(command: CatalogCommand, processor: CatalogProcessor) = runTest {

@@ -36,9 +36,17 @@ data class CatalogContext(
     var storagesValidated: MutableList<Storage> = mutableListOf(),
     var storageFilterValidated: StorageFilter = StorageFilter(),
 
+    // Тут хранится ссылка на текущий репозиторий
     var storageRepo: IRepoStorage = IRepoStorage.NONE,
+
+    // Для одного стораджа
     var storageRepoRead: Storage = Storage(), // То, что прочитали из репозитория
     var storageRepoPrepare: Storage = Storage(), // То, что готовим для сохранения в БД
     var storageRepoDone: Storage = Storage(),  // Результат, полученный из БД
-    var storagesRepoDone: MutableList<Storage> = mutableListOf(),
+
+    // Для списка стораджей
+    var storagesRepoRead: MutableList<Storage> = mutableListOf(), // То, что прочитали из репозитория
+    var storagesRepoReadTemp: MutableList<Storage> = mutableListOf(), // То, что прочитали из репозитория для временного хранения
+    var storagesRepoPrepare: MutableList<Storage> = mutableListOf(), // То, что готовим для сохранения в БД
+    var storagesRepoDone: MutableList<Storage> = mutableListOf(),  // Результат, полученный из БД
 )

@@ -16,6 +16,7 @@ import ru.otus.otuskotlin.lrvch.common.models.CatalogPaymentType
 import ru.otus.otuskotlin.lrvch.common.models.StorageFilter
 import ru.otus.otuskotlin.lrvch.common.repo.DbStorageFilterRequest
 import ru.otus.otuskotlin.lrvch.common.repo.DbStorageIdRequest
+import ru.otus.otuskotlin.lrvch.common.repo.DbStorageIdsRequest
 import ru.otus.otuskotlin.lrvch.common.repo.DbStorageRequest
 import ru.otus.otuskotlin.lrvch.common.repo.IRepoStorage
 import ru.otus.otuskotlin.lrvch.stubs.CatalogStorageStub
@@ -36,16 +37,21 @@ internal class StorageRepoInMemoryV2Test : StorageRepoBaseV2Test() {
     fun tearUp() {
         val slotStorage = slot<DbStorageRequest>()
         val slotId = slot<DbStorageIdRequest>()
+        val slotIds = slot<DbStorageIdsRequest>()
         val slotFl = slot<DbStorageFilterRequest>()
         val repo = RepoStorageInitialized(
             repo = StorageRepoInMemory(randomUuid = { uuidNew }),
-            initObjects = CatalogStorageStub.prepareSearchList(StorageFilter(paymentType = CatalogPaymentType.LICENSE)) + CatalogStorageStub.get()
+            initObjects =
+                CatalogStorageStub.prepareSearchList(StorageFilter(paymentType = CatalogPaymentType.LICENSE))
+                        + CatalogStorageStub.get()
+                        + CatalogStorageStub.prepareOptimizeListNotEmpty()
         )
         coEvery { testTestRepo.createStorage(capture(slotStorage)) } coAnswers { repo.createStorage(slotStorage.captured) }
         coEvery { testTestRepo.readStorage(capture(slotId)) } coAnswers { repo.readStorage(slotId.captured) }
         coEvery { testTestRepo.updateStorage(capture(slotStorage)) } coAnswers { repo.updateStorage(slotStorage.captured) }
         coEvery { testTestRepo.deleteStorage(capture(slotId)) } coAnswers { repo.deleteStorage(slotId.captured) }
         coEvery { testTestRepo.searchStorage(capture(slotFl)) } coAnswers { repo.searchStorage(slotFl.captured) }
+        coEvery { testTestRepo.searchStoragesByIds(capture(slotIds)) } coAnswers { repo.searchStoragesByIds(slotIds.captured) }
     }
 
     @Test
@@ -63,6 +69,6 @@ internal class StorageRepoInMemoryV2Test : StorageRepoBaseV2Test() {
     @Test
     override fun searchStorage() = super.searchStorage()
 
-//    @Test
-//    override fun optimize() = super.offersStorage()
+    @Test
+    override fun optimizeStorages() = super.optimizeStorages()
 }

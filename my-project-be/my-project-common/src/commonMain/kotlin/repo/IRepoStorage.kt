@@ -6,7 +6,7 @@ interface IRepoStorage {
     suspend fun updateStorage(rq: DbStorageRequest): IDbStorageResponse
     suspend fun deleteStorage(rq: DbStorageIdRequest): IDbStorageResponse
     suspend fun searchStorage(rq: DbStorageFilterRequest): IDbStoragesResponse
-//    suspend fun searchStoragesByIds(rq: DbStorageFilterRequest): IDbStoragesResponse
+    suspend fun searchStoragesByIds(rq: DbStorageIdsRequest): IDbStoragesResponse
     companion object {
         val NONE = object : IRepoStorage {
             override suspend fun createStorage(rq: DbStorageRequest): IDbStorageResponse {
@@ -26,6 +26,10 @@ interface IRepoStorage {
             }
 
             override suspend fun searchStorage(rq: DbStorageFilterRequest): IDbStoragesResponse {
+                throw NotImplementedError("Must not be used")
+            }
+
+            override suspend fun searchStoragesByIds(rq: DbStorageIdsRequest): IDbStoragesResponse {
                 throw NotImplementedError("Must not be used")
             }
         }

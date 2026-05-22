@@ -255,7 +255,13 @@ class RequestV2SerializationTest {
             ),
             storages = listOf(
                 StorageOptimizeObject(
-                    id = "id"
+                    id = "id",
+                    title = "storage title",
+                    description = "storage description",
+                    paymentType = PaymentType.FREE,
+                    readSpeed = SpeedType._100,
+                    writeSpeed = SpeedType._100,
+                    enableOptimize = "1"
                 )
             )
         )
@@ -264,7 +270,11 @@ class RequestV2SerializationTest {
         fun serialize() {
             val json = apiV2Mapper.encodeToString<IRequest>(request)
 
-            assertContains(json, "\"storages\":[{\"id\":\"id\"}]")
+//            assertContains(json, "\"storages\":[{\"id\":\"id\"}]")
+            assertContains(json, Regex("\"title\":\\s*\"storage title\""))
+            assertContains(json, Regex("\"mode\":\\s*\"stub\""))
+            assertContains(json, Regex("\"stub\":\\s*\"badTitle\""))
+            assertContains(json, Regex("\"requestType\":\\s*\"optimize\""))
         }
 
         @Test

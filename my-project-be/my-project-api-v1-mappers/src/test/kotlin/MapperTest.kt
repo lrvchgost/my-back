@@ -25,7 +25,7 @@ import ru.otus.otuskotlin.lrvch.api.v1.models.StorageSearchRequest
 import ru.otus.otuskotlin.lrvch.api.v1.models.StorageSearchResponse
 import ru.otus.otuskotlin.lrvch.api.v1.models.StorageUpdateRequest
 import ru.otus.otuskotlin.lrvch.api.v1.models.StorageUpdateResponse
-import  ru.otus.otuskotlin.lrvch.common.models.SpeedType as SpeedTypeModel
+import ru.otus.otuskotlin.lrvch.common.models.SpeedType as SpeedTypeModel
 import ru.otus.otuskotlin.lrvch.common.CatalogContext
 import ru.otus.otuskotlin.lrvch.common.models.CatalogCommand
 import ru.otus.otuskotlin.lrvch.common.models.CatalogError

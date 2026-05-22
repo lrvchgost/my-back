@@ -19,6 +19,15 @@ fun errorNotFound(id: StorageId) = DbStorageResponseErr(
     )
 )
 
+fun errorNotFoundByIds(ids: List<StorageId>) = DbStoragesResponseErr(
+    CatalogError(
+        code = "$ERROR_GROUP_REPO-not-found",
+        group = ERROR_GROUP_REPO,
+        field = "id",
+        message = "Objects with IDs: ${ids.map { it.asString() }} is not Found",
+    )
+)
+
 val errorEmptyId = DbStorageResponseErr(
     CatalogError(
         code = "$ERROR_GROUP_REPO-empty-id",
@@ -45,6 +54,34 @@ fun errorRepoConcurrency(
         message = "The object with ID ${oldStorage.id.asString()} has been changed concurrently by another user or process",
         exception = exception,
     )
+)
+
+data class ConcurrencyMultipleErrorData(
+    val oldStorage: Storage,
+    val expectedLock: StorageLock,
+)
+
+fun errorRepoConcurrencyMultiple(
+    data: List<ConcurrencyMultipleErrorData>
+) = DbStoragesResponseErrWithData(
+    params = data.map {
+        DbStorageResponseErrWithDataParams(
+            data = it.oldStorage,
+            errors = listOf(
+                CatalogError(
+                    code = "$ERROR_GROUP_REPO-concurrency",
+                    group = ERROR_GROUP_REPO,
+                    field = "lock",
+                    message = "The object with ID ${it.oldStorage.id.asString()} has been changed concurrently by another user or process",
+                    exception = RepoConcurrencyException(
+                            id = it.oldStorage.id,
+                            expectedLock = it.expectedLock,
+                            actualLock = it.oldStorage.lock,
+                        )
+                )
+            )
+        )
+    }
 )
 
 fun errorEmptyLock(id: StorageId) = DbStorageResponseErr(

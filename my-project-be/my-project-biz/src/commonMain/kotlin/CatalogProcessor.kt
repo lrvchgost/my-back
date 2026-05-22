@@ -4,15 +4,19 @@ import ru.otus.otuskotlin.lrvch.biz.general.initStatus
 import ru.otus.otuskotlin.lrvch.biz.general.operation
 import ru.otus.otuskotlin.lrvch.biz.general.stubs
 import ru.otus.otuskotlin.lrvch.biz.repo.checkLock
+import ru.otus.otuskotlin.lrvch.biz.repo.checkLocks
 import ru.otus.otuskotlin.lrvch.biz.repo.initRepo
 import ru.otus.otuskotlin.lrvch.biz.repo.persistent
 import ru.otus.otuskotlin.lrvch.biz.repo.prepareResult
 import ru.otus.otuskotlin.lrvch.biz.repo.repoCreate
 import ru.otus.otuskotlin.lrvch.biz.repo.repoDelete
+import ru.otus.otuskotlin.lrvch.biz.repo.repoDeleteByIds
+import ru.otus.otuskotlin.lrvch.biz.repo.repoOptimize
 import ru.otus.otuskotlin.lrvch.biz.repo.repoPrepareCreate
 import ru.otus.otuskotlin.lrvch.biz.repo.repoPrepareDelete
 import ru.otus.otuskotlin.lrvch.biz.repo.repoPrepareUpdate
 import ru.otus.otuskotlin.lrvch.biz.repo.repoRead
+import ru.otus.otuskotlin.lrvch.biz.repo.repoReadByIds
 import ru.otus.otuskotlin.lrvch.biz.repo.repoReadComplete
 import ru.otus.otuskotlin.lrvch.biz.repo.repoSearch
 import ru.otus.otuskotlin.lrvch.biz.repo.repoUpdate
@@ -158,7 +162,7 @@ class CatalogProcessor(
             prepareResult("Подготовка ответа")
         }
 
-        operation("Удалить объявление", CatalogCommand.DELETE) {
+        operation("Удалить сторадж", CatalogCommand.DELETE) {
             stubs("Обработка стабов") {
                 stubDeleteSuccess("Имитация успешной обработки", corSettings)
                 stubValidationBadId("Имитация ошибки валидации id")
@@ -191,7 +195,7 @@ class CatalogProcessor(
             prepareResult("Подготовка ответа")
         }
 
-        operation("Поиск объявлений", CatalogCommand.SEARCH) {
+        operation("Поиск стораджей", CatalogCommand.SEARCH) {
             stubs("Обработка стабов") {
                 stubSearchStoragesSuccess("Имитация успешной обработки", corSettings)
                 stubValidationBadId("Имитация ошибки валидации id")
@@ -200,14 +204,16 @@ class CatalogProcessor(
             }
 
             validation {
-                worker("Копируем поля в storageFilterValidating") { storageFilterValidating = storageFilterRequest.deepCopy() }
+                worker("Копируем поля в storageFilterValidating") {
+                    storageFilterValidating = storageFilterRequest.deepCopy()
+                }
                 validateSearchStringLength("Валидация длины строки поиска в фильтре")
 
                 finishStorageFilterValidation("Успешное завершение процедуры валидации")
             }
 
             persistent {
-                repoSearch("Поиск объявления в БД по фильтру")
+                repoSearch("Поиск стораджей в БД по фильтру")
             }
 
             prepareResult("Подготовка ответа")
@@ -222,11 +228,35 @@ class CatalogProcessor(
             }
 
             validation {
-                worker("Копируем поля в storagesValidating") { storagesValidating = (storagesRequest.map{ it.deepCopy()}.toMutableList())}
+                worker("Копируем поля в storagesValidating") {
+                    storagesValidating = (storagesRequest.map { it.deepCopy() }.toMutableList())
+                }
                 validateStoragesCompatible("Валидация что все стораджы совместимы")
 
                 finishStorageValidation("Успешное завершение процедуры валидации")
             }
+
+            // Простая реализация объединения, в проде реализация должна быть надежней
+            persistent {
+                repoReadByIds("Поиск стораджей в БД по id")
+
+                // Валидируем то что прочитали из бд, не доверяем входящим данным
+                worker("Копируем поля в storagesValidating") {
+                    storagesValidating = (storagesRepoRead.map { it.deepCopy() }.toMutableList())
+                }
+                validateStoragesCompatible("Валидация что все стораджы совместимы")
+                finishStorageValidation("Успешное завершение процедуры валидации")
+
+                // Проверяем локи в самом начале, чтоб не делать лишней работы
+                checkLocks("Проверяем консистентность по оптимистичной блокировке")
+
+                repoPrepareCreate("Подготовка объектов для сохранения")
+                repoOptimize("Создаем объединенный сторадж")
+
+                repoDeleteByIds("Удаление объявления из БД по ids")
+            }
+
+            prepareResult("Подготовка ответа")
         }
     }.build()
 }

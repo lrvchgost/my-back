@@ -4,6 +4,8 @@ package ru.otus.otuskotlin.lrvch.api.v2
 
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.encodeToJsonElement
 import ru.otus.otuskotlin.lrvch.api.v2.models.IRequest
 import ru.otus.otuskotlin.lrvch.api.v2.models.IResponse
 
@@ -14,6 +16,9 @@ val apiV2Mapper = Json {
     allowTrailingComma = true
 //    classDiscriminator = "requestType"
 }
+
+fun apiV2EncodeToJsonElement(obj: IRequest): JsonElement =
+    Json.encodeToJsonElement<IRequest>(obj)
 
 @Suppress("UNCHECKED_CAST")
 fun <T : IRequest> apiV2RequestDeserialize(json: String) =

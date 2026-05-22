@@ -51,3 +51,8 @@ logging:
           result:
             method:
               annotation: DEBUG
+    reactor:
+      netty:
+        http:
+          client:
+            HttpClient: TRACE

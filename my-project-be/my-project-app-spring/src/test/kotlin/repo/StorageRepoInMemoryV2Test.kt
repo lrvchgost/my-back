@@ -49,20 +49,20 @@ internal class StorageRepoInMemoryV2Test : StorageRepoBaseV2Test() {
     }
 
     @Test
-    override fun createAd() = super.createAd()
+    override fun createStorage() = super.createStorage()
 
     @Test
-    override fun readAd() = super.readAd()
+    override fun readStorage() = super.readStorage()
 
     @Test
-    override fun updateAd() = super.updateAd()
+    override fun updateStorage() = super.updateStorage()
 
     @Test
-    override fun deleteAd() = super.deleteAd()
+    override fun deleteStorage() = super.deleteStorage()
 
     @Test
-    override fun searchAd() = super.searchAd()
+    override fun searchStorage() = super.searchStorage()
 
 //    @Test
-//    override fun optimize() = super.offersAd()
+//    override fun optimize() = super.offersStorage()
 }

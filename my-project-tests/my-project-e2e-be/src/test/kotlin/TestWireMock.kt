@@ -3,10 +3,10 @@ package ru.otus.otuskotlin.lrvch.e2e.be
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
-import ru.otus.otuskotlin.lrvch.api.v1.models.StorageDebug as AdDebugV1
-import ru.otus.otuskotlin.lrvch.api.v2.models.StorageDebug as AdDebugV2
-import ru.otus.otuskotlin.lrvch.api.v1.models.StorageRequestDebugMode as AdRequestDebugModeV1
-import ru.otus.otuskotlin.lrvch.api.v2.models.StorageRequestDebugMode as AdRequestDebugModeV2
+import ru.otus.otuskotlin.lrvch.api.v1.models.StorageDebug as StorageDebugV1
+import ru.otus.otuskotlin.lrvch.api.v2.models.StorageDebug as StorageDebugV2
+import ru.otus.otuskotlin.lrvch.api.v1.models.StorageRequestDebugMode as StorageRequestDebugModeV1
+import ru.otus.otuskotlin.lrvch.api.v2.models.StorageRequestDebugMode as StorageRequestDebugModeV2
 import ru.otus.otuskotlin.lrvch.e2e.be.base.BaseContainerTest
 import ru.otus.otuskotlin.lrvch.e2e.be.base.client.Client
 import ru.otus.otuskotlin.lrvch.e2e.be.docker.WiremockDockerCompose
@@ -23,8 +23,7 @@ class TestWireMock: BaseContainerTest(WiremockDockerCompose) {
     }
 
     @Nested
-    internal inner class V1: ScenariosV1(client, AdDebugV1(mode = AdRequestDebugModeV1.PROD))
+    internal inner class V1: ScenariosV1(client, StorageDebugV1(mode = StorageRequestDebugModeV1.PROD))
     @Nested
-    internal inner class V2: ScenariosV2(client, AdDebugV2(mode = AdRequestDebugModeV2.PROD))
-
+    internal inner class V2: ScenariosV2(client, StorageDebugV2(mode = StorageRequestDebugModeV2.PROD))
 }

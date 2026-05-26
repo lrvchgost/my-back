@@ -6,6 +6,7 @@ import ru.otus.otuskotlin.lrvch.common.models.CatalogPaymentType
 import ru.otus.otuskotlin.lrvch.common.models.CatalogRequestId
 import ru.otus.otuskotlin.lrvch.common.models.CatalogState
 import ru.otus.otuskotlin.lrvch.common.models.SpeedType
+import ru.otus.otuskotlin.lrvch.common.models.StorageId
 import ru.otus.otuskotlin.lrvch.common.stubs.CatalogStubs
 import ru.otus.otuskotlin.lrvch.libs.cor.ICorChainDsl
 import ru.otus.otuskotlin.lrvch.libs.cor.worker
@@ -29,7 +30,7 @@ fun ICorChainDsl<CatalogContext>.stubCreateSuccess(title: String, corSettings: C
 //                storageRequest.description.takeIf { it.isNotBlank() }?.also { this.description = it }
                 storageRequest.paymentType.takeIf { it != CatalogPaymentType.FREE }?.also { this.paymentType = it }
                 storageRequest.readSpeed.takeIf { it != SpeedType.NONE }?.also { this.readSpeed = it }
-                storageRequest.id.takeIf { it != CatalogRequestId.NONE }?.also { this.id = it }
+                storageRequest.id.takeIf { it != StorageId.NONE }?.also { this.id = it }
             }
         }
     }

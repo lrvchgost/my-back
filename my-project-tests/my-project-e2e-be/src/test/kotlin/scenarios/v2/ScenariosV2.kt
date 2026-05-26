@@ -18,5 +18,5 @@ abstract class ScenariosV2(
     @Nested
     internal inner class SearchV2: ScenarioSearchV2(client, debug)
     @Nested
-    internal inner class OffersV2: ScenarioOptimizeV2(client, debug)
+    internal inner class OptimizeV2: ScenarioOptimizeV2(client, debug)
 }

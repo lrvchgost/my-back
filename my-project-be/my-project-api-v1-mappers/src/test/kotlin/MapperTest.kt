@@ -25,7 +25,7 @@ import ru.otus.otuskotlin.lrvch.api.v1.models.StorageSearchRequest
 import ru.otus.otuskotlin.lrvch.api.v1.models.StorageSearchResponse
 import ru.otus.otuskotlin.lrvch.api.v1.models.StorageUpdateRequest
 import ru.otus.otuskotlin.lrvch.api.v1.models.StorageUpdateResponse
-import  ru.otus.otuskotlin.lrvch.common.models.SpeedType as SpeedTypeModel
+import ru.otus.otuskotlin.lrvch.common.models.SpeedType as SpeedTypeModel
 import ru.otus.otuskotlin.lrvch.common.CatalogContext
 import ru.otus.otuskotlin.lrvch.common.models.CatalogCommand
 import ru.otus.otuskotlin.lrvch.common.models.CatalogError
@@ -33,6 +33,7 @@ import ru.otus.otuskotlin.lrvch.common.models.CatalogPaymentType
 import ru.otus.otuskotlin.lrvch.common.models.CatalogRequestId
 import ru.otus.otuskotlin.lrvch.common.models.CatalogState
 import ru.otus.otuskotlin.lrvch.common.models.CatalogWorkMode
+import ru.otus.otuskotlin.lrvch.common.models.StorageId
 import ru.otus.otuskotlin.lrvch.common.models.StorageLock
 import ru.otus.otuskotlin.lrvch.common.stubs.CatalogStubs
 import ru.otus.otuskotlin.lrvch.stubs.CatalogStorageStub
@@ -52,7 +53,7 @@ class MapperTest {
             )
 
             val expected = CatalogStorageStub.prepareResult {
-                id = CatalogRequestId.NONE
+                id = StorageId.NONE
                 lock = StorageLock.NONE
                 permissionsClient.clear()
             }

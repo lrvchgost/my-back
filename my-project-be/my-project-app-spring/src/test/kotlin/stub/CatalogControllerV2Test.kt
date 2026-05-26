@@ -2,22 +2,27 @@ package ru.otus.otuskotlin.lrvch.app.spring.stub
 
 import org.assertj.core.api.Assertions.assertThat
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
+import org.springframework.boot.webflux.test.autoconfigure.WebFluxTest
 import org.springframework.http.MediaType
 import org.springframework.test.context.bean.override.mockito.MockitoBean
 import org.springframework.test.web.reactive.server.WebTestClient
+import org.springframework.test.web.reactive.server.expectBody
 import org.springframework.web.reactive.function.BodyInserters
+import ru.otus.otuskotlin.lrvch.api.v2.apiV2RequestSerialize
 import ru.otus.otuskotlin.lrvch.api.v2.mappers.toTransportCreate
 import ru.otus.otuskotlin.lrvch.api.v2.mappers.toTransportDelete
 import ru.otus.otuskotlin.lrvch.api.v2.mappers.toTransportOptimize
 import ru.otus.otuskotlin.lrvch.api.v2.mappers.toTransportRead
 import ru.otus.otuskotlin.lrvch.api.v2.mappers.toTransportSearch
 import ru.otus.otuskotlin.lrvch.api.v2.mappers.toTransportUpdate
+import ru.otus.otuskotlin.lrvch.api.v2.models.IRequest
+import ru.otus.otuskotlin.lrvch.api.v2.models.IResponse
 import ru.otus.otuskotlin.lrvch.api.v2.models.OptimizeStoragesRequest
 import ru.otus.otuskotlin.lrvch.api.v2.models.StorageCreateRequest
 import ru.otus.otuskotlin.lrvch.api.v2.models.StorageDeleteRequest
 import ru.otus.otuskotlin.lrvch.api.v2.models.StorageReadRequest
 import ru.otus.otuskotlin.lrvch.api.v2.models.StorageSearchRequest
+import ru.otus.otuskotlin.lrvch.api.v2.models.StorageSearchResponse
 import ru.otus.otuskotlin.lrvch.api.v2.models.StorageUpdateRequest
 import ru.otus.otuskotlin.lrvch.app.spring.config.CatalogConfig
 import ru.otus.otuskotlin.lrvch.app.spring.controllers.CatalogControllerV2
@@ -78,7 +83,7 @@ internal class CatalogControllerV2Test {
         CatalogContext().toTransportOptimize().copy()
     )
 
-    private inline fun <reified Req : Any, reified Res : Any> testStubStorage(
+    private inline fun <reified Req : IRequest, reified Res : Any> testStubStorage(
         url: String,
         requestObj: Req,
         responseObj: Res,
@@ -87,13 +92,21 @@ internal class CatalogControllerV2Test {
             .post()
             .uri(url)
             .contentType(MediaType.APPLICATION_JSON)
-            .body(BodyInserters.fromValue(requestObj))
+//            .body(BodyInserters.fromValue(requestObj))
+            .bodyValue(apiV2RequestSerialize(requestObj))
             .exchange()
             .expectStatus().isOk
-            .expectBody(Res::class.java)
-            .value {
-                println("RESPONSE: $it")
-                assertThat(it).isEqualTo(responseObj)
+//            .expectBody(Res::class.java)
+            .expectBody<IResponse>()
+            .consumeWith { response ->
+                val body = response.responseBody
+                println("RESPONSE: $body")
+
+                assertThat(body).isEqualTo(responseObj)
             }
+//            .value {
+//                println("RESPONSE: $it")
+//                assertThat(it).isEqualTo(responseObj)
+//            }
     }
 }

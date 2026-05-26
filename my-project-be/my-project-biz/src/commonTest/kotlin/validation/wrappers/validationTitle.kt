@@ -20,12 +20,10 @@ fun validationTitleCorrect(command: CatalogCommand, processor: CatalogProcessor)
         command = command,
         state = CatalogState.NONE,
         workMode = CatalogWorkMode.TEST,
-        storageRequest = Storage(
-            id = stub.id,
-            title = "abc",
-            description = "abc",
-            lock = StorageLock("123-234-abc-ABC"),
-        ),
+        storageRequest = CatalogStorageStub.get().apply{
+            title = "abc"
+            description = "abc"
+        },
     )
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)
@@ -38,12 +36,10 @@ fun validationTitleTrim(command: CatalogCommand, processor: CatalogProcessor) = 
         command = command,
         state = CatalogState.NONE,
         workMode = CatalogWorkMode.TEST,
-        storageRequest = Storage(
-            id = stub.id,
-            title = " \n\t abc \t\n ",
-            description = "abc",
-            lock = StorageLock("123-234-abc-ABC"),
-        ),
+        storageRequest = CatalogStorageStub.get().apply{
+            title = " \n\t abc \t\n "
+            description = "abc"
+        },
     )
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)

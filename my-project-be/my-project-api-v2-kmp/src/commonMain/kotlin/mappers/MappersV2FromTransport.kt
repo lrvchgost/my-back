@@ -22,10 +22,10 @@ import ru.otus.otuskotlin.lrvch.common.CatalogContext
 import ru.otus.otuskotlin.lrvch.common.models.SpeedType as SpeedTypeModel
 import ru.otus.otuskotlin.lrvch.common.models.CatalogCommand
 import ru.otus.otuskotlin.lrvch.common.models.CatalogPaymentType
-import ru.otus.otuskotlin.lrvch.common.models.CatalogRequestId
 import ru.otus.otuskotlin.lrvch.common.models.CatalogWorkMode
 import ru.otus.otuskotlin.lrvch.common.models.Storage
 import ru.otus.otuskotlin.lrvch.common.models.StorageFilter
+import ru.otus.otuskotlin.lrvch.common.models.StorageId
 import ru.otus.otuskotlin.lrvch.common.models.StorageLock
 import ru.otus.otuskotlin.lrvch.common.stubs.CatalogStubs
 
@@ -158,9 +158,22 @@ private fun StorageSearchFilter?.fromTransport(): StorageFilter = StorageFilter(
 )
 
 private fun List<StorageOptimizeObject>.fromTransport(): List<Storage> =
-    this.map { it.id.toStorageWithId() }
+    this.map {
+        Storage(
+            id = it.id.toStorageId(),
+            title = it.title ?: "",
+            description = it.description ?: "",
+            paymentType = it.paymentType.fromTransport(),
+            capacity = it.capacity ?: "",
+            availability = it.availability ?: "",
+            readSpeed = it.readSpeed.fromTransport(),
+            writeSpeed = it.readSpeed.fromTransport(),
+            optimizeEnabled = it.enableOptimize.toStorageOptimizeEnabled(),
+            lock = it.lock.toStorageLock()
+        )
+    }
 
-private fun String?.toStorageId() = this?.let { CatalogRequestId(it) } ?: CatalogRequestId.NONE
+private fun String?.toStorageId() = this?.let { StorageId(it) } ?: StorageId.NONE
 private fun String?.toStorageLock() = this?.let { StorageLock(it) } ?: StorageLock.NONE
 private fun String?.toStorageWithId() = Storage(id = this.toStorageId())
 private fun String?.toStorageOptimizeEnabled() = when (this) {

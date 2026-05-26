@@ -13,6 +13,7 @@ import ru.otus.otuskotlin.lrvch.api.v2.models.StorageResponseObject
 import ru.otus.otuskotlin.lrvch.api.v2.models.StorageSearchResponse
 import ru.otus.otuskotlin.lrvch.api.v2.models.StorageUpdateResponse
 import ru.otus.otuskotlin.lrvch.api.v2.models.Error
+import ru.otus.otuskotlin.lrvch.api.v2.models.StorageInitResponse
 import ru.otus.otuskotlin.lrvch.common.CatalogContext
 import ru.otus.otuskotlin.lrvch.common.exceptions.UnknownCatalogCommand
 import ru.otus.otuskotlin.lrvch.common.models.SpeedType as CatalogSpeedType
@@ -22,6 +23,7 @@ import ru.otus.otuskotlin.lrvch.common.models.CatalogPaymentType
 import ru.otus.otuskotlin.lrvch.common.models.CatalogRequestId
 import ru.otus.otuskotlin.lrvch.common.models.CatalogState
 import ru.otus.otuskotlin.lrvch.common.models.Storage
+import ru.otus.otuskotlin.lrvch.common.models.StorageId
 import ru.otus.otuskotlin.lrvch.common.models.StorageLock
 import ru.otus.otuskotlin.lrvch.common.models.StoragePermissionClient
 
@@ -32,8 +34,15 @@ fun CatalogContext.toTransportStorage(): IResponse = when (val cmd = command) {
     CatalogCommand.DELETE -> toTransportDelete()
     CatalogCommand.SEARCH -> toTransportSearch()
     CatalogCommand.OPTIMIZE -> toTransportOptimize()
+    CatalogCommand.INIT -> toTransportInit()
+    CatalogCommand.FINISH -> throw UnknownCatalogCommand(command)
     CatalogCommand.NONE -> throw UnknownCatalogCommand(command)
 }
+
+fun CatalogContext.toTransportInit() = StorageInitResponse(
+    result = state.toResult(),
+    errors = errors.toTransportErrors(),
+)
 
 fun CatalogContext.toTransportCreate() = StorageCreateResponse(
     result = state.toTransport(),
@@ -81,6 +90,7 @@ fun Storage.toTransport() = StorageResponseObject(
     readSpeed = readSpeed.toTransport(),
     writeSpeed = readSpeed.toTransport(),
     lock = lock.takeIf { it != StorageLock.NONE }?.asString(),
+    enableOptimize = optimizeEnabled.toStorageOptimizeEnabled(),
     permissions = permissionsClient.toTransport(),
 )
 
@@ -98,6 +108,7 @@ private fun CatalogError.toTransport() = Error(
 )
 
 internal fun CatalogRequestId.toTransport() = takeIf { it != CatalogRequestId.NONE }?.asString()
+internal fun StorageId.toTransport() = takeIf { it != StorageId.NONE }?.asString()
 
 internal fun CatalogPaymentType.toTransport(): PaymentType? = when (this) {
     CatalogPaymentType.LICENSE -> PaymentType.LICENSE
@@ -132,3 +143,20 @@ fun List<Storage>.toTransport(): List<StorageResponseObject>? = this
 fun List<CatalogError>.toTransportError(): List<Error>? = this
     .map { it.toTransport() }
     .takeIf { it.isNotEmpty() }
+
+private fun CatalogState.toResult(): ResponseResult? = when (this) {
+    CatalogState.RUNNING, CatalogState.FINISHED -> ResponseResult.SUCCESS
+    CatalogState.FAILED -> ResponseResult.ERROR
+    CatalogState.NONE -> null
+}
+
+private fun List<CatalogError>.toTransportErrors(): List<Error>? = this
+    .map { it.toTransport() }
+    .toList()
+    .takeIf { it.isNotEmpty() }
+
+private fun Boolean?.toStorageOptimizeEnabled() = when (this) {
+    true -> "1"
+    false -> "0"
+    null -> "0"
+}

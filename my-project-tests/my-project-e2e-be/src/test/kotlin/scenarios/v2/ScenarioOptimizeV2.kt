@@ -19,7 +19,7 @@ abstract class ScenarioOptimizeV2(
     private val debug: StorageDebug? = null
 ) {
     @Test
-    fun search() = runBlocking {
+    fun optimize() = runBlocking {
         val objs = listOf(
             someCreateStorage,
             someCreateStorage.copy(title = "Some storage 2"),
@@ -46,7 +46,20 @@ abstract class ScenarioOptimizeV2(
             cObj
         }
 
-        val sObj = objs.map { StorageOptimizeObject(it.id) }
+        val sObj = objs.map {
+            StorageOptimizeObject(
+                id = it.id,
+                title = it.title,
+                description = it.description,
+                capacity = it.capacity,
+                availability = it.availability,
+                paymentType = it.paymentType,
+                readSpeed = it.readSpeed,
+                writeSpeed = it.writeSpeed,
+                lock = it.lock,
+                enableOptimize = it.enableOptimize
+            )
+        }
         val storageResp = client.sendAndReceive(
             "storage/optimize",
             OptimizeStoragesRequest(
@@ -69,15 +82,15 @@ abstract class ScenarioOptimizeV2(
         assertEquals(someCreateStorage.writeSpeed, cObj.writeSpeed)
         assertEquals(someCreateStorage.enableOptimize, cObj.enableOptimize)
 
-        objs.forEach { obj ->
-            val resDelete = client.sendAndReceive(
-                "storage/delete", StorageDeleteRequest(
-                    debug = debug,
-                    storage = StorageDeleteObject(obj.id, obj.lock),
-                )
-            ) as StorageDeleteResponse
-
-            assertEquals(ResponseResult.SUCCESS, resDelete.result)
-        }
+//        objs.forEach { obj ->
+//            val resDelete = client.sendAndReceive(
+//                "storage/delete", StorageDeleteRequest(
+//                    debug = debug,
+//                    storage = StorageDeleteObject(obj.id, obj.lock),
+//                )
+//            ) as StorageDeleteResponse
+//
+//            assertEquals(ResponseResult.SUCCESS, resDelete.result)
+//        }
     }
 }

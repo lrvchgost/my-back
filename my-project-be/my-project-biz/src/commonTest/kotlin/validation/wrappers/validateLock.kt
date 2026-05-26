@@ -8,7 +8,9 @@ import ru.otus.otuskotlin.lrvch.common.models.CatalogRequestId
 import ru.otus.otuskotlin.lrvch.common.models.CatalogState
 import ru.otus.otuskotlin.lrvch.common.models.CatalogWorkMode
 import ru.otus.otuskotlin.lrvch.common.models.Storage
+import ru.otus.otuskotlin.lrvch.common.models.StorageId
 import ru.otus.otuskotlin.lrvch.common.models.StorageLock
+import ru.otus.otuskotlin.lrvch.stubs.CatalogStorageStub
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
@@ -18,12 +20,10 @@ fun validationLockCorrect(command: CatalogCommand, processor: CatalogProcessor) 
         command = command,
         state = CatalogState.NONE,
         workMode = CatalogWorkMode.TEST,
-        storageRequest = Storage(
-            id = CatalogRequestId("123-234-abc-ABC"),
-            title = "abc",
-            description = "abc",
-            lock = StorageLock("123-234-abc-ABC"),
-        ),
+        storageRequest = CatalogStorageStub.get().apply{
+            title = "abc"
+            description = "abc"
+        },
     )
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)
@@ -35,12 +35,11 @@ fun validationLockTrim(command: CatalogCommand, processor: CatalogProcessor) = r
         command = command,
         state = CatalogState.NONE,
         workMode = CatalogWorkMode.TEST,
-        storageRequest = Storage(
-            id = CatalogRequestId("123-234-abc-ABC"),
-            title = "abc",
-            description = " \n\t abc \t\n ",
-            lock = StorageLock(" \n\t 123-234-abc-ABC \n\t "),
-        ),
+        storageRequest = CatalogStorageStub.get().apply{
+            title = "abc"
+            description = "abc"
+            lock = StorageLock(" \n\t 123 \n\t ")
+        },
     )
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)
@@ -53,7 +52,7 @@ fun validationLockEmpty(command: CatalogCommand, processor: CatalogProcessor) = 
         state = CatalogState.NONE,
         workMode = CatalogWorkMode.TEST,
         storageRequest = Storage(
-            id = CatalogRequestId("123-234-abc-ABC"),
+            id = StorageId("123-234-abc-ABC"),
             title = "abc",
             description = "abc",
             lock = StorageLock(""),
@@ -73,7 +72,7 @@ fun validationLockFormat(command: CatalogCommand, processor: CatalogProcessor) =
         state = CatalogState.NONE,
         workMode = CatalogWorkMode.TEST,
         storageRequest = Storage(
-            id = CatalogRequestId("123-234-abc-ABC"),
+            id = StorageId("123-234-abc-ABC"),
             title = "abc",
             description = "abc",
             lock = StorageLock("!@#\$%^&*(),.{}"),

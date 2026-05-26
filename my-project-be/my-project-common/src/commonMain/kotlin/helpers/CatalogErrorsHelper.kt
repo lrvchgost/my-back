@@ -16,10 +16,17 @@ fun Throwable.asCatalogError(
     message = message,
     exception = this,
 )
-inline fun CatalogContext.addError(vararg error: CatalogError) = errors.addAll(error)
+
+inline fun CatalogContext.addError(error: CatalogError) = errors.add(error)
+inline fun CatalogContext.addErrors(error: Collection<CatalogError>) = errors.addAll(error)
 
 inline fun CatalogContext.fail(error: CatalogError) {
     addError(error)
+    state = CatalogState.FAILED
+}
+
+inline fun CatalogContext.fail(errors: Collection<CatalogError>) {
+    addErrors(errors)
     state = CatalogState.FAILED
 }
 
@@ -38,4 +45,16 @@ inline fun errorValidation(
     group = "validation",
     message = "Validation error for field $field: $description",
     level = level,
+)
+
+inline fun errorSystem(
+    violationCode: String,
+    level: LogLevel = LogLevel.ERROR,
+    e: Throwable,
+) = CatalogError(
+    code = "system-$violationCode",
+    group = "system",
+    message = "System error occurred. Our stuff has been informed, please retry later",
+    level = level,
+    exception = e,
 )

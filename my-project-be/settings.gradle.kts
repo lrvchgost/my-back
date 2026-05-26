@@ -40,3 +40,9 @@ include(":my-project-biz")
 include(":my-project-app-common")
 include(":my-project-app-spring")
 include(":my-project-app-kafka")
+
+// DB
+include(":my-project-repo-common")
+include(":my-project-repo-inmemory")
+include(":my-project-repo-tests")
+include(":my-project-repo-pgjvm")

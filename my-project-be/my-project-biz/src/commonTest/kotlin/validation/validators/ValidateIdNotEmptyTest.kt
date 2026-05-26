@@ -7,6 +7,7 @@ import ru.otus.otuskotlin.lrvch.common.CatalogContext
 import ru.otus.otuskotlin.lrvch.common.models.CatalogRequestId
 import ru.otus.otuskotlin.lrvch.common.models.CatalogState
 import ru.otus.otuskotlin.lrvch.common.models.Storage
+import ru.otus.otuskotlin.lrvch.common.models.StorageId
 import ru.otus.otuskotlin.lrvch.libs.cor.rootChain
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -14,7 +15,7 @@ import kotlin.test.assertEquals
 class ValidateIdNotEmptyTest {
     @Test
     fun emptyId() = runTest {
-        val ctx = CatalogContext(state = CatalogState.RUNNING, storageValidating = Storage(id = CatalogRequestId("")))
+        val ctx = CatalogContext(state = CatalogState.RUNNING, storageValidating = Storage(id = StorageId("")))
         chain.exec(ctx)
         assertEquals(CatalogState.FAILED, ctx.state)
         assertEquals(1, ctx.errors.size)

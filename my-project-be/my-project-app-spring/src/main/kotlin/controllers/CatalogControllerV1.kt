@@ -49,7 +49,7 @@ class CatalogControllerV1(
         process(appSettings, request = request, this::class, "search")
 
     @PostMapping("optimize")
-    suspend fun  offers(@RequestBody request: OptimizeStoragesRequest): OptimizeStoragesResponse =
+    suspend fun  optimize(@RequestBody request: OptimizeStoragesRequest): OptimizeStoragesResponse =
         process(appSettings, request = request, this::class, "optimize")
 
     companion object {

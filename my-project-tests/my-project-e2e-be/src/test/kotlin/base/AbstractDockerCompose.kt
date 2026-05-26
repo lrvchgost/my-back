@@ -31,6 +31,7 @@ abstract class AbstractDockerCompose(
     private val logConsumer = Slf4jLogConsumer(LOGGER)
     private fun getComposeFiles(): List<File> = dockerComposeNames.map {
         val file = File("build/dcompose/$it")
+        // Для локальной разработки удобней брать из локальной папки
 //        val file = File("docker-compose/$it")
         if (!file.exists()) throw IllegalArgumentException("file $it not found!")
         file
@@ -38,12 +39,21 @@ abstract class AbstractDockerCompose(
 
     private val compose by lazy {
         ComposeContainer(getComposeFiles()).apply {
-            withLocalCompose(true)
+//            withLocalCompose(true)
             apps.forEach { (service, port) ->
-                withExposedService(service, port)
-                withLogConsumer(service, logConsumer)
-                withStartupTimeout(Duration.ofSeconds(600))
-                waitingFor(service, Wait.forHealthcheck())
+                println("container $service:$port")
+                withExposedService(service, port).apply {
+                    println("container expose $service:$port")
+                }
+                withLogConsumer(service, logConsumer).apply {
+
+                }
+                withStartupTimeout(Duration.ofSeconds(600)).apply {
+                    println("container timeout $service:$port")
+                }
+                waitingFor(service, Wait.forHealthcheck()).apply {
+                    println("container healthcheck $service:$port")
+                }
             }
         }
     }

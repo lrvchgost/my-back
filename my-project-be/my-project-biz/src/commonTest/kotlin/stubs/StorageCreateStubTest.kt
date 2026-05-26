@@ -10,6 +10,7 @@ import ru.otus.otuskotlin.lrvch.common.models.CatalogState
 import ru.otus.otuskotlin.lrvch.common.models.CatalogWorkMode
 import ru.otus.otuskotlin.lrvch.common.models.SpeedType
 import ru.otus.otuskotlin.lrvch.common.models.Storage
+import ru.otus.otuskotlin.lrvch.common.models.StorageId
 import ru.otus.otuskotlin.lrvch.common.stubs.CatalogStubs
 import ru.otus.otuskotlin.lrvch.stubs.CatalogStorageStub
 import kotlin.test.Test
@@ -18,7 +19,7 @@ import kotlin.test.assertEquals
 class StorageCreateStubTest {
 
     private val processor = CatalogProcessor()
-    val id = CatalogRequestId("666")
+    val id = StorageId("666")
     val title = "title 666"
     val description = "desc 666"
     val paymentType = CatalogPaymentType.FREE

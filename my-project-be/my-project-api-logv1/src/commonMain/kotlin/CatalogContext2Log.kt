@@ -44,7 +44,7 @@ private fun CatalogError.toLog() = ErrorLogModel(
 )
 
 private fun Storage.toLog() = StorageLog(
-    id = id.takeIf { it != CatalogRequestId.NONE }?.asString(),
+    id = id.takeIf { it != StorageId.NONE }?.asString(),
     title = title.takeIf { it.isNotBlank() },
     description = description.takeIf { it.isNotBlank() },
     capacity = capacity.takeIf { it.isNotBlank() },

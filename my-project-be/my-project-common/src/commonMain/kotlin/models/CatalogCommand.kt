@@ -8,4 +8,6 @@ enum class CatalogCommand {
     READ,
     SEARCH,
     OPTIMIZE,
+    INIT,
+    FINISH
 }

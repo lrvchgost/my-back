@@ -13,12 +13,14 @@ dependencies {
     implementation(libs.jackson.kotlin)
     implementation(kotlin("reflect"))
     implementation(kotlin("stdlib"))
+    implementation(projects.myProjectRepoPgjvm)
 
     implementation(libs.coroutines.core)
     implementation(libs.coroutines.reactor)
     implementation(libs.coroutines.reactive)
     implementation(libs.kotlinx.serialization.core)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.spring.kotlin.serialization)
 
     // Внутренние модели
     implementation(project(":my-project-common"))
@@ -40,6 +42,13 @@ dependencies {
     testImplementation(kotlin("test-junit5"))
     testImplementation(libs.spring.test)
     testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.spring.webflux.test)
+    testImplementation(libs.spring.mockk)
+
+    // DB
+    implementation(projects.myProjectRepoInmemory)
+    testImplementation(projects.myProjectRepoCommon)
+    testImplementation(projects.myProjectStubs)
 }
 
 tasks {
@@ -59,4 +68,17 @@ tasks {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+    environment("CATALOG_STORAGES_DB", "test_db")
+}
+
+tasks.bootBuildImage {
+    builder = "paketobuildpacks/builder-jammy-base:latest"
+    environment.set(mapOf("BP_HEALTH_CHECKER_ENABLED" to "true"))
+    buildpacks.set(
+        listOf(
+            "docker.io/paketobuildpacks/adoptium",
+            "urn:cnb:builder:paketo-buildpacks/java",
+            "docker.io/paketobuildpacks/health-checker:latest"
+        )
+    )
 }

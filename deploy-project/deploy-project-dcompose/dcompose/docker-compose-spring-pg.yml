@@ -23,8 +23,8 @@ services:
 
   psql:
     image: postgres
-    #    ports:
-    #      - "5432:5432"
+    ports:
+      - "5435:5432"
     environment:
       POSTGRES_PASSWORD: "catalog-of-storages-pass"
       POSTGRES_USER: "postgres"
